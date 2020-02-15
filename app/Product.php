@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $fillable = [
-        'name', 'slug', 'details','description','image', 'images', 'vedio', 'version', 'layout', 'ratina_ready', 'files_included', 'browser', 'bootstrap', 'highlights','vendor_id'
+        'name', 'slug', 'details', 'description', 'image', 'images', 'vedio', 'version', 'layout', 'ratina_ready', 'files_included', 'browser', 'bootstrap', 'highlights', 'vendor_id'
     ];
 
     // protected $appends = [/*'like_count',*/ 'ratings'];
@@ -16,7 +16,7 @@ class Product extends Model
     {
         return $this->morphMany('App\Comment', 'commentable');
     }
-    
+
     public function reviews()
     {
         return $this->hasMany('App\Review');
@@ -49,16 +49,16 @@ class Product extends Model
     // {
     //     return $this->users()->wherePivot('rating', '>', 0)->get()->pluck('pivot')->pluck('rating')->avg();
     // }
-    // public function setRatings()
-    // {
-    //     $this->rating = $this->users()->wherePivot('rating', '>', 0)->get()->pluck('pivot')->pluck('rating')->avg();
-    //     $this->update();
-    // }
     public function setRatings()
     {
-        $this->rating = $this->reviews()->where('ratings', '>', 0)->get()->pluck('ratings')->avg();
+        $this->rating = $this->users()->wherePivot('rating', '>', 0)->get()->pluck('pivot')->pluck('rating')->avg();
         $this->update();
     }
+    // public function setRatings()
+    // {
+    //     $this->rating = $this->reviews()->where('ratings', '>', 0)->get()->pluck('ratings')->avg();
+    //     $this->update();
+    // }
 
     public function vendor()
     {

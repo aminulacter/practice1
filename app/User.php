@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','image', 'type'
+        'name', 'email', 'password', 'image', 'type'
     ];
 
     /**
@@ -45,7 +45,7 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Review');
     }
-   
+
     public function products()
     {
         return $this->belongsToMany('App\Product', 'product_users')->withPivot('favorite')->withTimestamps();
@@ -57,8 +57,8 @@ class User extends Authenticatable
         } else {
             $this->products()->attach($productId, ['favorite' => true]);
         }
-       
-    
+
+
         $this->products()->where('products.id', $productId)->first()->logFavorite();
     }
 
@@ -72,28 +72,28 @@ class User extends Authenticatable
         // }
         $this->products()->where('products.id', $productId)->first()->logFavorite();
     }
-    // public function rates($productId, $ratingPoint)
-    // {
-    //     if ($this->products()->where('products.id', $productId)->exists()) {
-    //         $this->products()->updateExistingPivot($productId, ['rating' => $ratingPoint]);
-    //     } else {
-    //         $this->products()->attach($productId, ['rating' => $ratingPoint]);
-    //     }
-        
-    //     $this->products()->where('products.id', $productId)->first()->setRatings();
-    // }
-
     public function rates($productId, $ratingPoint)
     {
-        if ($this->reviews()->where('product_id', $productId)->exists()) {
-            $this->reviews()->where('product_id', $productId)->update(['ratings' => $ratingPoint]);
+        if ($this->products()->where('products.id', $productId)->exists()) {
+            $this->products()->updateExistingPivot($productId, ['rating' => $ratingPoint]);
         } else {
-            $rating = $this->reviews()->create([
-                'product_id' => $productId,
-                'ratings' => $ratingPoint
-            ]);
+            $this->products()->attach($productId, ['rating' => $ratingPoint]);
         }
-        
-        $this->reviews()->where('product_id', $productId)->first()->product->setRatings();
+
+        $this->products()->where('products.id', $productId)->first()->setRatings();
     }
+
+    // public function rates($productId, $ratingPoint)
+    // {
+    //     if ($this->reviews()->where('product_id', $productId)->exists()) {
+    //         $this->reviews()->where('product_id', $productId)->update(['ratings' => $ratingPoint]);
+    //     } else {
+    //         $rating = $this->reviews()->create([
+    //             'product_id' => $productId,
+    //             'ratings' => $ratingPoint
+    //         ]);
+    //     }
+
+    //     $this->reviews()->where('product_id', $productId)->first()->product->setRatings();
+    // }
 }
