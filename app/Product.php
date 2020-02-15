@@ -54,12 +54,30 @@ class Product extends Model
         $this->rating = $this->users()->wherePivot('rating', '>', 0)->get()->pluck('pivot')->pluck('rating')->avg();
         $this->update();
     }
+    public function withComment()
+    {
+        return $this->comments()
+            ->whereNull('comment_id')
+            ->where()
+            ->with('commentReplies')
+            ->get();
+    }
+    public function getRatings($userId=1)
+    {
+        $rating = $this->users()
+                 ->where('user_id', $userId)
+                 ->first()->pivot->rating;
+        return $rating;
+        //$this->update();
+    }
     // public function setRatings()
     // {
     //     $this->rating = $this->reviews()->where('ratings', '>', 0)->get()->pluck('ratings')->avg();
     //     $this->update();
     // }
-
+    public function createComment()
+    {
+    }
     public function vendor()
     {
         return $this->belongsTo('App\Vendor');

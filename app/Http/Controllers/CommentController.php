@@ -14,7 +14,10 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        $comments = Comment::whereNull('comment_id')
+            ->with('commentReplies')
+            ->get();
+        return view('comments', compact('comments'));
     }
 
     /**

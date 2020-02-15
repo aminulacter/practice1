@@ -19,3 +19,4 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/products/{product}', 'ProductController@show');
+Route::get('/comments', 'CommentController@index');

@@ -48,7 +48,7 @@ class User extends Authenticatable
 
     public function products()
     {
-        return $this->belongsToMany('App\Product', 'product_users')->withPivot('favorite')->withTimestamps();
+        return $this->belongsToMany('App\Product', 'product_users')->withPivot('favorite', 'rating')->withTimestamps();
     }
     public function likes($productId)
     {
@@ -82,6 +82,10 @@ class User extends Authenticatable
 
         $this->products()->where('products.id', $productId)->first()->setRatings();
     }
+    // public function createComment($productId, )
+    // {
+
+    // }
 
     // public function rates($productId, $ratingPoint)
     // {

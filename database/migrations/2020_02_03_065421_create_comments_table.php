@@ -20,9 +20,10 @@ class CreateCommentsTable extends Migration
             $table->morphs('commentable');
             // $table->unsignedBigInteger('commentable_id');
             // $table->string('commentable_type', 50);
-            $table->unsignedBigInteger('parent_id')->nullable();
-            $table->boolean('rateComment')->default(false);
+            $table->unsignedBigInteger('comment_id')->nullable();
+            //$table->boolean('rateComment')->default(false);
             $table->timestamps();
+            $table->foreign('comment_id')->references('id')->on('comments');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
     }

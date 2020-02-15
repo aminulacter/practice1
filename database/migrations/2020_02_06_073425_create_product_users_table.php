@@ -18,7 +18,7 @@ class CreateProductUsersTable extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('product_id');
             $table->boolean('favorite')->default(false);
-            // $table->integer('rating')->default(0);
+            $table->integer('rating')->default(0);
             $table->timestamps();
             $table->unique(['user_id', 'product_id']);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
