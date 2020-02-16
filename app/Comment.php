@@ -21,10 +21,10 @@ class Comment extends Model
     }
     public function replies()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class)->with('user');
     }
     public function commentReplies()
     {
-        return $this->hasMany(Comment::class)->with('replies', 'user');
+        return $this->hasMany(Comment::class)->with('replies');
     }
 }

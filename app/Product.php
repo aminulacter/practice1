@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Product extends Model
 {
@@ -56,17 +57,21 @@ class Product extends Model
     }
     public function withComment()
     {
-        return $this->comments()
-            ->whereNull('comment_id')
-            ->where()
-            ->with('commentReplies')
+        $productId = $this->id;
+
+        return DB::table('comments')
+            ->join('product_users', function ($join) use ($productId) {
+                $join->on('product_users.user_id', '=', 'comments.user_id')
+                    ->where('product_users.product_id', '=', $productId)
+                    ->where('product_users.rating', '>', 0);
+            })
             ->get();
     }
-    public function getRatings($userId=1)
+    public function getRatings($userId = 1)
     {
         $rating = $this->users()
-                 ->where('user_id', $userId)
-                 ->first()->pivot->rating;
+            ->where('user_id', $userId)
+            ->first()->pivot->rating;
         return $rating;
         //$this->update();
     }

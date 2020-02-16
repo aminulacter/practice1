@@ -2,7 +2,7 @@
 
 
 @section('breadcrumb')
-@include('layouts.partials._hero_index')
+@include('layouts.partials._hero_Index')
 @endsection
 
 @section('content')

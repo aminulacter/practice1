@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use Illuminate\Http\Request;
+use App\Comment;
 
 class ProductController extends Controller
 {
@@ -49,7 +50,7 @@ class ProductController extends Controller
         //dd($product->wherePivot('ratings', '>', 1));
         // $product->setRatings();
         // $users = $product->users()->get();
-        
+
         // foreach ($users as $user) {
         //     dump($user->pivot->rating);
         // }
@@ -57,7 +58,7 @@ class ProductController extends Controller
             ->with('commentReplies')
             ->get();
 
-        
+
         return view('product');
     }
 
