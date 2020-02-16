@@ -54,12 +54,13 @@ class ProductController extends Controller
         // foreach ($users as $user) {
         //     dump($user->pivot->rating);
         // }
-        $comments = Comment::whereNull('comment_id')
+        $comments = $product->comments()->whereNull('comment_id')
+            ->with('user')
             ->with('commentReplies')
             ->get();
 
 
-        return view('product');
+        return view('product', compact('product', 'comments'));
     }
 
     /**

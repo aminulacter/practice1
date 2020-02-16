@@ -161,10 +161,7 @@
                             <div class="fade show tab-pane product-tab active" id="product-details">
                                 <div class="tab-content-wrapper">
                                     <h1>Landing Page Details</h1>
-                                    <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut scelerisque the
-                                        mattis, leo quam aliquet congue placerat mi id nisi interdum mollis. Praesent pharetra,
-                                        justo ut scel erisque the mattis, leo quam aliquet congue justo ut scelerisque. Praesent
-                                        pharetra, justo ut scelerisque the mattis, leo quam aliquet congue justo ut scelerisque.</p>
+                                    <p>{{ $product->description }}</p>
                                     <h2>Features With Image:</h2>
                                     <img src="images/prodesc.jpg" alt="This is product description thumbnail">
 
@@ -191,8 +188,10 @@
                             <!-- end /.tab-content -->
 
                             <div class="fade tab-pane product-tab" id="product-comment">
+                                  
                                 <div class="thread">
                                     <ul class="media-list thread-list">
+                                        @foreach ($comments as $comment)
                                         <li class="single-thread">
                                             <div class="media">
                                                 <div class="media-left">
@@ -204,21 +203,47 @@
                                                     <div>
                                                         <div class="media-heading">
                                                             <a href="author.html">
-                                                                <h4>Themexylum</h4>
+                                                                <h4>{{ $comment->user->name }}</h4>
                                                             </a>
-                                                            <span>9 Hours Ago</span>
+                                                            <span>{{ $comment->updated_at->diffForHumans() }}</span>
                                                         </div>
                                                         <span class="comment-tag buyer">Purchased</span>
                                                         <a href="#" class="reply-link">Reply</a>
                                                     </div>
-                                                    <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut
-                                                        sceleris que the mattis, leo quam aliquet congue placerat mi id nisi
-                                                        interdum mollis. </p>
+                                                    <p>{{ $comment->body }} </p>
                                                 </div>
                                             </div>
+                                            @include('partials.replies', ['replies' => $comment->commentReplies])
+                                            {{-- ////////////
+                                                    @foreach ($comments as $comment)
+                                                        <li>
+                                                            <div>
+                                                                {{ $comment->user->name }} {{$comment->user->getratings(1)}}
+                                                                @php
+                                                                    $rating = $comment->user->getratings(1)
+                                                                @endphp
+                                                                <div class="rating product--rating">
+                                                                    <ul>
+                                                                        @for ($i = 0; $i < $rating; $i++)
+                                                                            <li>
+                                                                                <span class="fa fa-star"></span>
+                                                                            </li>
+                                                                    @endfor
+                                                                </ul>
+                                                                </div>
+                                                                <p>{{ $comment->body }}</p>
+                                                            </div>
+                                                            </li>
+
+                                                            
+                                                            @include('partials.replies', ['replies' => $comment->commentReplies])
+                                                        
+                                                        @endforeach
+
+                                            //////////////// --}}
 
                                             <!-- nested comment markup -->
-                                            <ul class="children">
+                                            {{-- <ul class="children">
                                                 <li class="single-thread depth-2">
                                                     <div class="media">
                                                         <div class="media-left">
@@ -258,7 +283,7 @@
                                                         </div>
                                                     </div>
                                                 </li>
-                                            </ul>
+                                            </ul> --}}
 
                                             <!-- comment reply -->
                                             <div class="media depth-2 reply-comment">
@@ -276,130 +301,14 @@
                                             </div>
                                             <!-- comment reply -->
                                         </li>
+                                        @endforeach
                                         <!-- end single comment thread /.comment-->
 
-                                        <li class="single-thread">
-                                            <div class="media">
-                                                <div class="media-left">
-                                                    <a href="#">
-                                                        <img class="media-object" src="images/m3.png" alt="Commentator Avatar">
-                                                    </a>
-                                                </div>
-                                                <div class="media-body">
-                                                    <div>
-                                                        <div class="media-heading">
-                                                            <a href="author.html">
-                                                                <h4>Themexylum</h4>
-                                                            </a>
-                                                            <span>9 Hours Ago</span>
-                                                        </div>
-                                                        <a href="#" class="reply-link">Reply</a>
-                                                    </div>
-                                                    <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut
-                                                        sceleris que the mattis, leo quam aliquet congue placerat mi id nisi
-                                                        interdum mollis. </p>
-                                                </div>
-                                            </div>
+                                       
 
-                                            <!-- comment reply -->
-                                            <div class="media depth-2 reply-comment">
-                                                <div class="media-left">
-                                                    <a href="#">
-                                                        <img class="media-object" src="images/m2.png" alt="Commentator Avatar">
-                                                    </a>
-                                                </div>
-                                                <div class="media-body">
-                                                    <form action="#" class="comment-reply-form">
-                                                        <textarea name="reply-comment" placeholder="Write your comment..."></textarea>
-                                                        <button class="btn btn--sm btn--round">Post Comment</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            <!-- comment reply -->
-                                        </li>
-                                        <!-- end single comment thread /.comment-->
+                                       
 
-                                        <li class="single-thread">
-                                            <div class="media">
-                                                <div class="media-left">
-                                                    <a href="#">
-                                                        <img class="media-object" src="images/m4.png" alt="Commentator Avatar">
-                                                    </a>
-                                                </div>
-                                                <div class="media-body">
-                                                    <div>
-                                                        <div class="media-heading">
-                                                            <a href="author.html">
-                                                                <h4>Themexylum</h4>
-                                                            </a>
-                                                            <span>9 Hours Ago</span>
-                                                        </div>
-                                                        <a href="#" class="reply-link">Reply</a>
-                                                    </div>
-                                                    <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut
-                                                        sceleris que the mattis, leo quam aliquet congue placerat mi id nisi
-                                                        interdum mollis. </p>
-                                                </div>
-                                            </div>
-
-                                            <!-- comment reply -->
-                                            <div class="media depth-2 reply-comment">
-                                                <div class="media-left">
-                                                    <a href="#">
-                                                        <img class="media-object" src="images/m2.png" alt="Commentator Avatar">
-                                                    </a>
-                                                </div>
-                                                <div class="media-body">
-                                                    <form action="#" class="comment-reply-form">
-                                                        <textarea name="reply-comment" placeholder="Write your comment..."></textarea>
-                                                        <button class="btn btn--sm btn--round">Post Comment</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            <!-- comment reply -->
-                                        </li>
-                                        <!-- end single comment thread /.comment-->
-
-                                        <li class="single-thread">
-                                            <div class="media">
-                                                <div class="media-left">
-                                                    <a href="#">
-                                                        <img class="media-object" src="images/m5.png" alt="Commentator Avatar">
-                                                    </a>
-                                                </div>
-                                                <div class="media-body">
-                                                    <div>
-                                                        <div class="media-heading">
-                                                            <a href="author.html">
-                                                                <h4>Themexylum</h4>
-                                                            </a>
-                                                            <span>9 Hours Ago</span>
-                                                        </div>
-                                                        <a href="#" class="reply-link">Reply</a>
-                                                    </div>
-                                                    <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut
-                                                        sceleris que the mattis, leo quam aliquet congue placerat mi id nisi
-                                                        interdum mollis. </p>
-                                                </div>
-                                            </div>
-
-                                            <!-- comment reply -->
-                                            <div class="media depth-2 reply-comment">
-                                                <div class="media-left">
-                                                    <a href="#">
-                                                        <img class="media-object" src="images/m2.png" alt="Commentator Avatar">
-                                                    </a>
-                                                </div>
-                                                <div class="media-body">
-                                                    <form action="#" class="comment-reply-form">
-                                                        <textarea name="reply-comment" placeholder="Write your comment..."></textarea>
-                                                        <button class="btn btn--sm btn--round">Post Comment</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            <!-- comment reply -->
-                                        </li>
-                                        <!-- end single comment thread /.comment-->
+                                       
                                     </ul>
                                     <!-- end /.media-list -->
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Product;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -14,10 +15,21 @@ class CommentController extends Controller
      */
     public function index()
     {
-        $comments = Comment::whereNull('comment_id')
+        $cmt = Product::find(1)->comments()->whereNull('comment_id')
+            ->with('user')
             ->with('commentReplies')
             ->get();
-        return view('comments', compact('comments'));
+       
+        $productRating = Product::find(1)->rating;
+        $allcomments = Comment::whereNull('comment_id')
+           // ->where('ratingComment', 1)
+            ->with('user')
+            ->with('commentReplies')
+            ->get();
+        $comments = $cmt->filter(function ($comment, $key) {
+            return $comment->ratingComment ==1;
+        });
+        return view('comments', compact('comments', 'productRating'));
     }
 
     /**

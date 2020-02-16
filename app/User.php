@@ -82,22 +82,10 @@ class User extends Authenticatable
 
         $this->products()->where('products.id', $productId)->first()->setRatings();
     }
-    // public function createComment($productId, )
-    // {
-
-    // }
-
-    // public function rates($productId, $ratingPoint)
-    // {
-    //     if ($this->reviews()->where('product_id', $productId)->exists()) {
-    //         $this->reviews()->where('product_id', $productId)->update(['ratings' => $ratingPoint]);
-    //     } else {
-    //         $rating = $this->reviews()->create([
-    //             'product_id' => $productId,
-    //             'ratings' => $ratingPoint
-    //         ]);
-    //     }
-
-    //     $this->reviews()->where('product_id', $productId)->first()->product->setRatings();
-    // }
+    public function getRatings($productId = 1)
+    {
+        return $rating = $this->products()
+            ->where('product_id', $productId)
+            ->first()->pivot->rating;
+    }
 }

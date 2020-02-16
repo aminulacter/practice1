@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use App\Comment;
+use Illuminate\Support\Facades\Auth;
 
 class Product extends Model
 {
@@ -67,24 +69,35 @@ class Product extends Model
             })
             ->get();
     }
-    public function getRatings($userId = 1)
-    {
-        $rating = $this->users()
-            ->where('user_id', $userId)
-            ->first()->pivot->rating;
-        return $rating;
-        //$this->update();
-    }
+    
     // public function setRatings()
     // {
     //     $this->rating = $this->reviews()->where('ratings', '>', 0)->get()->pluck('ratings')->avg();
     //     $this->update();
     // }
-    public function createComment()
+    public function saveComment($commentBody, $userId, $ratingComment = false)
     {
+        $comment = new Comment();
+        //$comment->user_id = auth()->user()->id;
+        $comment->user_id = $userId;
+        $comment->body = $commentBody;
+        $comment->ratingComment = $ratingComment;
+        $this->comments()->save($comment);
+    }
+
+
+    public function saveReply($commentBody, $userId, $parentId)
+    {
+        $comment = new Comment();
+        //$comment->user_id = auth()->user()->id;
+        $comment->user_id = $userId;
+        $comment->body = $commentBody;
+        $comment->comment_id = $parentId;
+        $this->comments()->save($comment);
     }
     public function vendor()
     {
         return $this->belongsTo('App\Vendor');
     }
+ 
 }
