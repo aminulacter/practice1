@@ -59,8 +59,10 @@ class ProductController extends Controller
             ->with('commentReplies')
             ->get();
 
-
-        return view('product', compact('product', 'comments'));
+        $ratingComments = $comments->filter(function ($comment, $key) {
+            return $comment->ratingComment == 1;
+        });
+        return view('product', compact('product', 'comments', 'ratingComments'));
     }
 
     /**
