@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Comment;
 use Illuminate\Support\Facades\Auth;
+use App\Vendor;
 
 class Product extends Model
 {
     protected $fillable = [
-        'name', 'slug', 'details', 'description', 'image', 'images', 'vedio', 'version', 'layout', 'ratina_ready', 'files_included', 'browser', 'bootstrap', 'highlights', 'vendor_id'
+        'name', 'slug', 'details', 'description', 'image', 'images', 'vedio', 'version', 'layout', 'ratina_ready', 'files_included', 'browser', 'bootstrap', 'highlights', 'user_id'
     ];
 
     // protected $appends = [/*'like_count',*/ 'ratings'];
@@ -38,6 +39,23 @@ class Product extends Model
     {
         return $this->belongsToMany('App\User', 'product_users')->withPivot('favorite', 'rating')->withTimestamps();
     }
+
+    public function status($userId)
+    {
+        return ProductUser::where('user_id', $userId)
+                    ->where('product_id', $this->id)
+                    ->first()
+                    ->relation;
+    }
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
+    public function vendor()
+    {
+        return Vendor::where('user_id', $this->user_id)->first();
+    }
+
     // public function getLikeCountAttribute()
     // {
     //     return $this->users()->wherePivot('favorite', 1)->count();
@@ -70,11 +88,7 @@ class Product extends Model
             ->get();
     }
     
-    // public function setRatings()
-    // {
-    //     $this->rating = $this->reviews()->where('ratings', '>', 0)->get()->pluck('ratings')->avg();
-    //     $this->update();
-    // }
+ 
     public function saveComment($commentBody, $userId, $ratingComment = false)
     {
         $comment = new Comment();
@@ -95,9 +109,8 @@ class Product extends Model
         $comment->comment_id = $parentId;
         $this->comments()->save($comment);
     }
-    public function vendor()
+    public function faqs()
     {
-        return $this->belongsTo('App\Vendor');
+        return $this->hasMany('App\Question');
     }
- 
 }

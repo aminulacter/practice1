@@ -48,7 +48,16 @@ class User extends Authenticatable
 
     public function products()
     {
-        return $this->belongsToMany('App\Product', 'product_users')->withPivot('favorite', 'rating')->withTimestamps();
+        return $this->belongsToMany('App\Product', 'product_users')->withPivot('favorite', 'rating', 'relation')->withTimestamps();
+    }
+    public function owns()
+    {
+        return $this->hasMany('App\Product');
+    }
+
+    public function represents()
+    {
+        return $this->hasOne('App\Vendor');
     }
     public function likes($productId)
     {

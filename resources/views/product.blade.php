@@ -159,30 +159,9 @@
 
                         <div class="tab-content">
                             <div class="fade show tab-pane product-tab active" id="product-details">
+                               
                                 <div class="tab-content-wrapper">
-                                    <h1>Landing Page Details</h1>
-                                    <p>{{ $product->description }}</p>
-                                    <h2>Features With Image:</h2>
-                                    <img src="{{ asset('images/prodesc.jpg') }}" alt="This is product description thumbnail">
-
-                                    <h2>Features With HTML List Unordered:</h2>
-                                    <ul>
-                                        <li>Six different themes for product slider</li>
-                                        <li>Featured products slider form selected categories.</li>
-                                        <li>Product slider form specific categories of products. Include or exclude categories.</li>
-                                        <li>Product slider form specific tags of products. Include or exclude tags. New</li>
-                                    </ul>
-
-                                    <h2>Features With HTML List Ordered:</h2>
-                                    <ol>
-                                        <li>Six different themes for product slider</li>
-                                        <li>Featured products slider form selected categories.</li>
-                                        <li>Product slider form specific categories of products. Include or exclude categories.</li>
-                                        <li>Product slider form specific tags of products. Include or exclude tags. New</li>
-                                    </ol>
-
-                                    <h2>Features With HTML List Ordered:</h2>
-                                    <iframe width="100" height="400" src="https://www.youtube.com/embed/w2zIUJrglR4" allowfullscreen></iframe>
+                                    {{ $product->description }}
                                 </div>
                             </div>
                             <!-- end /.tab-content -->
@@ -362,150 +341,29 @@
                             <div class="fade tab-pane product-tab" id="product-faq">
                                 <div class="tab-content-wrapper">
                                     <div class="panel-group accordion" role="tablist" id="accordion">
-                                        <div class="panel accordion__single" id="panel-one">
-                                            <div class="single_acco_title">
-                                                <h4>
-                                                    <a data-toggle="collapse" href="#collapse1" class="collapsed" aria-expanded="false" data-target="#collapse1" aria-controls="collapse1">
-                                                        <span>How to write the changelog for theme updates?</span>
-                                                        <i class="lnr lnr-chevron-down indicator"></i>
-                                                    </a>
-                                                </h4>
-                                            </div>
-
-                                            <div id="collapse1" class="panel-collapse collapse" aria-labelledby="panel-one" data-parent="#accordion">
-                                                <div class="panel-body">
-                                                    <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut
-                                                        sceleris que the mattis, leo quam aliquet congue placerat mi id nisi
-                                                        interdum mollis. Aliquip placeat salvia cillum iphone. Seitan aliquip
-                                                        quis cardigan american apparel, butcher. Nunc placerat mi id nisi
-                                                        interdum mollis. Praesent pharetra, justo ut sceleris que the mattis,
-                                                        leo quam aliquet congue placerat mi id nisi interdum mollis. Aliquip
-                                                        placeat salvia cillum iphone. Seitan aliquip quis cardigan american
-                                                        apparel, butcher .</p>
+                                         @foreach ($product->faqs as $faq)
+                                            <div class="panel accordion__single" id="panel-{{ numberToText($loop->iteration) }}">
+                                            
+                                                    <div class="single_acco_title">
+                                                    <h4>
+                                                    <a data-toggle="collapse" href="#collapse{{ $loop->iteration }}" class="collapsed" aria-expanded="false" data-target="#collapse{{ $loop->iteration }}" aria-controls="collapse{{ $loop->iteration }}">
+                                                        <span>{{$faq->question}}?</span>
+                                                            <i class="lnr lnr-chevron-down indicator"></i>
+                                                        </a>
+                                                    </h4>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <!-- end /.accordion__single -->
-                                        <div class="panel accordion__single" id="panel-two">
-                                            <div class="single_acco_title">
-                                                <h4>
-                                                    <a data-toggle="collapse" href="#collapse2" class="collapsed" aria-expanded="false" data-target="#collapse2" aria-controls="collapse2">
-                                                        <span>Why do I need to login to purchase an item on DigiPro?</span>
-                                                        <i class="lnr lnr-chevron-down indicator"></i>
-                                                    </a>
-                                                </h4>
-                                            </div>
 
-                                            <div id="collapse2" class="panel-collapse collapse" aria-labelledby="panel-two" data-parent="#accordion">
-                                                <div class="panel-body">
-                                                    <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut
-                                                        sceleris que the mattis, leo quam aliquet congue placerat mi id nisi
-                                                        interdum mollis. Aliquip placeat salvia cillum iphone. Seitan aliquip
-                                                        quis cardigan american apparel, butcher. Nunc placerat mi id nisi
-                                                        interdum mollis. Praesent pharetra, justo ut sceleris que the mattis,
-                                                        leo quam aliquet congue placerat mi id nisi interdum mollis. Aliquip
-                                                        placeat salvia cillum iphone. Seitan aliquip quis cardigan american
-                                                        apparel, butcher .</p>
-                                                </div>
+                                                <div id="collapse{{ $loop->iteration }}" class="panel-collapse collapse" aria-labelledby="panel-{{ numberToText($loop->iteration) }}" data-parent="#accordion">
+                                                    <div class="panel-body">
+                                                    <p>{{$faq->answer}}</p>
+                                                    </div>
+                                                </div> 
+                                            
+                                            
                                             </div>
-                                        </div>
+                                          @endforeach
                                         <!-- end /.accordion__single -->
-                                        <div class="panel accordion__single" id="panel-three">
-                                            <div class="single_acco_title">
-                                                <h4>
-                                                    <a data-toggle="collapse" href="#collapse3" class="collapsed" aria-expanded="false" data-target="#collapse3" aria-controls="collapse3">
-                                                        <span>How to create an account on DigiPro?</span>
-                                                        <i class="lnr lnr-chevron-down indicator"></i>
-                                                    </a>
-                                                </h4>
-                                            </div>
-
-                                            <div id="collapse3" class="panel-collapse collapse" aria-labelledby="panel-three" data-parent="#accordion">
-                                                <div class="panel-body">
-                                                    <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut
-                                                        sceleris que the mattis, leo quam aliquet congue placerat mi id nisi
-                                                        interdum mollis. Aliquip placeat salvia cillum iphone. Seitan aliquip
-                                                        quis cardigan american apparel, butcher. Nunc placerat mi id nisi
-                                                        interdum mollis. Praesent pharetra, justo ut sceleris que the mattis,
-                                                        leo quam aliquet congue placerat mi id nisi interdum mollis. Aliquip
-                                                        placeat salvia cillum iphone. Seitan aliquip quis cardigan american
-                                                        apparel, butcher .</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- end /.accordion__single -->
-                                        <div class="panel accordion__single" id="panel-four">
-                                            <div class="single_acco_title">
-                                                <h4>
-                                                    <a data-toggle="collapse" href="#collapse4" class="collapsed" aria-expanded="false" data-target="#collapse4" aria-controls="collapse4">
-                                                        <span>How to write the changelog for theme updates?</span>
-                                                        <i class="lnr lnr-chevron-down indicator"></i>
-                                                    </a>
-                                                </h4>
-                                            </div>
-
-                                            <div id="collapse4" class="panel-collapse collapse" aria-labelledby="panel-four" data-parent="#accordion">
-                                                <div class="panel-body">
-                                                    <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut
-                                                        sceleris que the mattis, leo quam aliquet congue placerat mi id nisi
-                                                        interdum mollis. Aliquip placeat salvia cillum iphone. Seitan aliquip
-                                                        quis cardigan american apparel, butcher. Nunc placerat mi id nisi
-                                                        interdum mollis. Praesent pharetra, justo ut sceleris que the mattis,
-                                                        leo quam aliquet congue placerat mi id nisi interdum mollis. Aliquip
-                                                        placeat salvia cillum iphone. Seitan aliquip quis cardigan american
-                                                        apparel, butcher .</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- end /.accordion__single -->
-                                        <div class="panel accordion__single" id="panel-five">
-                                            <div class="single_acco_title">
-                                                <h4>
-                                                    <a data-toggle="collapse" href="#collapse5" class="collapsed" aria-expanded="false" data-target="#collapse5" aria-controls="collapse5">
-                                                        <span>Do you recommend using a download manager software?</span>
-                                                        <i class="lnr lnr-chevron-down indicator"></i>
-                                                    </a>
-                                                </h4>
-                                            </div>
-
-                                            <div id="collapse5" class="panel-collapse collapse" aria-labelledby="panel-five" data-parent="#accordion">
-                                                <div class="panel-body">
-                                                    <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut
-                                                        sceleris que the mattis, leo quam aliquet congue placerat mi id nisi
-                                                        interdum mollis. Aliquip placeat salvia cillum iphone. Seitan aliquip
-                                                        quis cardigan american apparel, butcher. Nunc placerat mi id nisi
-                                                        interdum mollis. Praesent pharetra, justo ut sceleris que the mattis,
-                                                        leo quam aliquet congue placerat mi id nisi interdum mollis. Aliquip
-                                                        placeat salvia cillum iphone. Seitan aliquip quis cardigan american
-                                                        apparel, butcher .</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- end /.accordion__single -->
-                                        <div class="panel accordion__single" id="panel-six">
-                                            <div class="single_acco_title">
-                                                <h4>
-                                                    <a data-toggle="collapse" href="#collapse6" class="collapsed" aria-expanded="false" data-target="#collapse6" aria-controls="collapse6">
-                                                        <span>How to purchase an item on DigiPro?</span>
-                                                        <i class="lnr lnr-chevron-down indicator"></i>
-                                                    </a>
-                                                </h4>
-                                            </div>
-
-                                            <div id="collapse6" class="panel-collapse collapse" aria-labelledby="panel-six" data-parent="#accordion">
-                                                <div class="panel-body">
-                                                    <p>Nunc placerat mi id nisi interdum mollis. Praesent pharetra, justo ut
-                                                        sceleris que the mattis, leo quam aliquet congue placerat mi id nisi
-                                                        interdum mollis. Aliquip placeat salvia cillum iphone. Seitan aliquip
-                                                        quis cardigan american apparel, butcher. Nunc placerat mi id nisi
-                                                        interdum mollis. Praesent pharetra, justo ut sceleris que the mattis,
-                                                        leo quam aliquet congue placerat mi id nisi interdum mollis. Aliquip
-                                                        placeat salvia cillum iphone. Seitan aliquip quis cardigan american
-                                                        apparel, butcher .</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- end /.accordion__single -->
+                                        
                                     </div>
                                     <!-- end /.accordion -->
                                 </div>
@@ -619,15 +477,15 @@
                             <ul class="infos">
                                 <li>
                                     <p class="data-label">Released</p>
-                                    <p class="info">16 June 2015</p>
+                                    <p class="info">{{ $product->created_at }}</p>
                                 </li>
                                 <li>
                                     <p class="data-label">Updated</p>
-                                    <p class="info">28 July 2016 </p>
+                                    <p class="info">{{ $product->created_at }} </p>
                                 </li>
                                 <li>
                                     <p class="data-label">Version</p>
-                                    <p class="info">1.2</p>
+                                    <p class="info">{{$product->version}}</p>
                                 </li>
                                 <li>
                                     <p class="data-label">Category</p>
@@ -635,11 +493,11 @@
                                 </li>
                                 <li>
                                     <p class="data-label">Layout</p>
-                                    <p class="info">Responsive</p>
+                                    <p class="info">{{ $product->layout }}</p>
                                 </li>
                                 <li>
                                     <p class="data-label">Retina Ready</p>
-                                    <p class="info">No</p>
+                                <p class="info">{{ $product->retina_ready }}</p>
                                 </li>
                                 <li>
                                     <p class="data-label">Files Included</p>
@@ -681,25 +539,25 @@
                                 </div>
 
                                 <div class="author">
-                                    <h4>AazzTech</h4>
-                                    <p>Signed Up: 08 April 2016</p>
+                                    <h4>{{ $vendor->name }}</h4>
+                                <p>Signed Up: 08 April 2016 {{ $vendor->created_at }}</p>
                                 </div>
                                 <!-- end /.author -->
 
                                 <div class="social social--color--filled">
                                     <ul>
                                         <li>
-                                            <a href="#">
+                                            <a href="{{ $vendor->facebook_profile }}">
                                                 <span class="fa fa-facebook"></span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#">
+                                            <a href="{{ $vendor->facebook_profile }}">
                                                 <span class="fa fa-twitter"></span>
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#">
+                                            <a href="{{ $vendor->linkedin_profile }}">
                                                 <span class="fa fa-dribbble"></span>
                                             </a>
                                         </li>

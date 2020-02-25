@@ -13,6 +13,7 @@ $factory->define(Vendor::class, function (Faker $faker) {
     return [
         'name' => $company_name,
         'slug' => $slug,
+        'user_id' => $faker->numberBetween($min = 5, $max = 15),
         'description' => $faker->paragraph(),
         'facebook_profile' => $faker->url,
         'tweet_profile' => $faker->url,

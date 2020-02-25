@@ -13,10 +13,10 @@ class ProductSeeder extends Seeder
     public function run()
     {
         for ($i = 1; $i <= 30; $i++) {
-            Product::create([
+            $product = Product::create([
                 'name' => 'Laptop ' . $i,
                 'slug' => 'laptop-' . $i,
-                'vendor_id'=> rand(1, 10),
+                'user_id'=> rand(5, 15),
                 'details' => [13, 14, 15][array_rand([13, 14, 15])] . ' inch, ' . [1, 2, 3][array_rand([1, 2, 3])] . ' TB SSD, 32GB RAM',
                 'price' => rand(100, 1000),
                 'description' => 'Lorem ' . $i . ' ipsum dolor sit amet, consectetur adipisicing elit. Ipsum temporibus iusto ipsa, asperiores voluptas unde aspernatur praesentium in? Aliquam, dolore!',
@@ -32,7 +32,7 @@ class ProductSeeder extends Seeder
             Product::create([
                 'name' => 'Desktop ' . $i,
                 'slug' => 'desktop-' . $i,
-                'vendor_id' => rand(1, 10),
+                'user_id' =>  rand(5, 15),
                 'details' => [24, 25, 27][array_rand([24, 25, 27])] . ' inch, ' . [1, 2, 3][array_rand([1, 2, 3])] . ' TB SSD, 32GB RAM',
                 'price' => rand(100, 1000),
                 'description' => 'Lorem ' . $i . ' ipsum dolor sit amet, consectetur adipisicing elit. Ipsum temporibus iusto ipsa, asperiores voluptas unde aspernatur praesentium in? Aliquam, dolore!',
@@ -45,7 +45,7 @@ class ProductSeeder extends Seeder
             Product::create([
                 'name' => 'Phone ' . $i,
                 'slug' => 'phone-' . $i,
-                'vendor_id' => rand(1, 10),
+                'user_id' =>  rand(5, 15),
                 'details' => [16, 32, 64][array_rand([16, 32, 64])] . 'GB, 5.' . [7, 8, 9][array_rand([7, 8, 9])] . ' inch screen, 4GHz Quad Core',
                 'price' => rand(100, 1000),
                 'description' => 'Lorem ' . $i . ' ipsum dolor sit amet, consectetur adipisicing elit. Ipsum temporibus iusto ipsa, asperiores voluptas unde aspernatur praesentium in? Aliquam, dolore!',
@@ -58,7 +58,7 @@ class ProductSeeder extends Seeder
             Product::create([
                 'name' => 'Tablet ' . $i,
                 'slug' => 'tablet-' . $i,
-                'vendor_id' => rand(1, 10),
+                'user_id' =>  rand(5, 15),
                 'details' => [16, 32, 64][array_rand([16, 32, 64])] . 'GB, 5.' . [10, 11, 12][array_rand([10, 11, 12])] . ' inch screen, 4GHz Quad Core',
                 'price' => rand(100, 1000),
                 'description' => 'Lorem ' . $i . ' ipsum dolor sit amet, consectetur adipisicing elit. Ipsum temporibus iusto ipsa, asperiores voluptas unde aspernatur praesentium in? Aliquam, dolore!',
@@ -71,7 +71,7 @@ class ProductSeeder extends Seeder
             Product::create([
                 'name' => 'TV ' . $i,
                 'slug' => 'tv-' . $i,
-                'vendor_id' => rand(1, 10),
+                'user_id' => rand(5, 15),
                 'details' => [46, 50, 60][array_rand([7, 8, 9])] . ' inch screen, Smart TV, 4K',
                 'price' => rand(100, 1000),
                 'description' => 'Lorem ' . $i . ' ipsum dolor sit amet, consectetur adipisicing elit. Ipsum temporibus iusto ipsa, asperiores voluptas unde aspernatur praesentium in? Aliquam, dolore!',
@@ -84,7 +84,7 @@ class ProductSeeder extends Seeder
             Product::create([
                 'name' => 'Camera ' . $i,
                 'slug' => 'camera-' . $i,
-                'vendor_id' => rand(1, 10),
+                'user_id' => rand(5, 15),
                 'details' => 'Full Frame DSLR, with 18-55mm kit lens.',
                 'price' => rand(100, 1000),
                 'description' => 'Lorem ' . $i . ' ipsum dolor sit amet, consectetur adipisicing elit. Ipsum temporibus iusto ipsa, asperiores voluptas unde aspernatur praesentium in? Aliquam, dolore!',
@@ -97,7 +97,7 @@ class ProductSeeder extends Seeder
             Product::create([
                 'name' => 'Appliance ' . $i,
                 'slug' => 'appliance-' . $i,
-                'vendor_id' => rand(1, 10),
+                'user_id' => rand(5, 15),
                 'details' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis, dolorum!',
                 'price' => rand(100, 1000),
                 'description' => 'Lorem ' . $i . ' ipsum dolor sit amet, consectetur adipisicing elit. Ipsum temporibus iusto ipsa, asperiores voluptas unde aspernatur praesentium in? Aliquam, dolore!',
@@ -107,5 +107,12 @@ class ProductSeeder extends Seeder
         }
         // Select random entries to be featured
         Product::whereIn('id', [1, 12, 22, 31, 41, 43, 47, 51, 53, 61, 69, 73, 80])->update(['featured' => true]);
+
+        $products = Product::all();
+        foreach ($products as $product) {
+            for ($i = 0; $i < 5; $i++) {
+                $product->faqs()->save(factory(App\Question::class)->make());
+            }
+        }
     }
 }

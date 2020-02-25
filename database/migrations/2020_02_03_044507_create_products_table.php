@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('slug')->unique();
-            $table->unsignedBigInteger('vendor_id')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->mediumText('details');
             $table->mediumText('description');
             $table->double('price', 8, 2);
@@ -35,7 +35,8 @@ class CreateProductsTable extends Migration
             $table->text('browser')->nullable();
             $table->boolean('bootstrap')->default(true);
             $table->timestamps();
-            $table->foreign('vendor_id')->references('id')->on('vendors')->onDelete('set null');
+           
+            //$table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
         });
     }
 

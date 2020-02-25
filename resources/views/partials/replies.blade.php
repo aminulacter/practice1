@@ -12,7 +12,10 @@
                 <h4>{{ $reply->user->name }}</h4>
             <span>{{$reply->updated_at->diffForHumans()}}</span>
              </div>
-             <span class="comment-tag author">Author</span>
+              @if ($reply->user_id == $product->user_id)
+                  <span class="comment-tag author">Author</span>
+              @endif
+             
               <p>{{ $reply->body }}</p>
          </div>
       </div>

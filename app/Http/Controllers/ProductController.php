@@ -62,7 +62,8 @@ class ProductController extends Controller
         $ratingComments = $comments->filter(function ($comment, $key) {
             return $comment->ratingComment == 1;
         });
-        return view('product', compact('product', 'comments', 'ratingComments'));
+        $vendor = $product->vendor();
+        return view('product', compact('product', 'comments', 'ratingComments', 'vendor'));
     }
 
     /**
