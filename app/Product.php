@@ -14,13 +14,13 @@ class Product extends Model
         'name', 'slug', 'details', 'description', 'image', 'images', 'vedio', 'version', 'layout', 'ratina_ready', 'files_included', 'browser', 'bootstrap', 'highlights', 'user_id'
     ];
 
-    // protected $appends = [/*'like_count',*/ 'ratings'];
+    protected $appends = [/*'like_count',*/ 'ratingcounts'];
 
     public function comments()
     {
         return $this->morphMany('App\Comment', 'commentable');
     }
-
+    
     public function reviews()
     {
         return $this->hasMany('App\Review');
@@ -66,10 +66,10 @@ class Product extends Model
         $this->update();
     }
 
-    // public function getRatingsAttribute()
-    // {
-    //     return $this->users()->wherePivot('rating', '>', 0)->get()->pluck('pivot')->pluck('rating')->avg();
-    // }
+    public function getRatingcountsAttribute()
+    {
+        return $this->users()->wherePivot('rating', '>', 0)->count();
+    }
     public function setRatings()
     {
         $this->rating = $this->users()->wherePivot('rating', '>', 0)->get()->pluck('pivot')->pluck('rating')->avg();

@@ -47,17 +47,12 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //dd($product->wherePivot('ratings', '>', 1));
-        // $product->setRatings();
-        // $users = $product->users()->get();
-
-        // foreach ($users as $user) {
-        //     dump($user->pivot->rating);
-        // }
+        //dd($product->ratingcounts);
         $comments = $product->comments()->whereNull('comment_id')
             ->with('user')
             ->with('commentReplies')
             ->get();
+        
 
         $ratingComments = $comments->filter(function ($comment, $key) {
             return $comment->ratingComment == 1;

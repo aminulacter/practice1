@@ -257,14 +257,19 @@
                                                                     </a>
                                                                     <span>{{ $comment->updated_at->diffForHumans() }}</span>
                                                                 </div>
-                                                                 @php
+                                                                @php
                                                                     $rating = $comment->user->getratings(1)
                                                                 @endphp
                                                                  <div class="rating product--rating">
                                                                     <ul>
-                                                                        @for ($i = 0; $i < $rating; $i++)
+                                                                        @for ($i = 0; $i < 5; $i++)
                                                                             <li>
-                                                                                <span class="fa fa-star"></span>
+                                                                                @if ($i< $rating)
+                                                                                     <span class="fa fa-star"></span>
+                                                                                 @else
+                                                                                    <span class="fa fa-star-o"></span>
+                                                                                 @endif
+                                                                             
                                                                             </li>
                                                                          @endfor
                                                                      </ul>
@@ -435,35 +440,41 @@
                                 <li>
                                     <p>
                                         <span class="lnr lnr-heart scolor"></span>Favorites</p>
-                                    <span>240</span>
+                                    <span>{{$product->favorite_count}}</span>
                                 </li>
                                 <li>
                                     <p>
                                         <span class="lnr lnr-bubble mcolor3"></span>Comments</p>
-                                    <span>35</span>
+                                    <span>{{$product->comments->count()}}</span>
                                 </li>
                             </ul>
 
 
                             <div class="rating product--rating">
                                 <ul>
-                                    <li>
-                                        <span class="fa fa-star"></span>
-                                    </li>
-                                    <li>
-                                        <span class="fa fa-star"></span>
-                                    </li>
-                                    <li>
-                                        <span class="fa fa-star"></span>
-                                    </li>
-                                    <li>
-                                        <span class="fa fa-star"></span>
-                                    </li>
-                                    <li>
+                                    @for ($i = 0; $i< 5; $i++)
+                                        @if ($i < floor($product->rating))
+                                        <li>
+                                            <span class="fa fa-star"></span>
+                                        </li> 
+                                        @elseif($i == floor($product->rating) )
+                                        <li>
+                                             <span class="fa fa-star-half-o"></span> 
+                                        </li> 
+                                        @else
+                                        <li>
+                                            <span class="fa fa-star-o"></span> 
+                                        </li> 
+                                        @endif
+                                        
+                                    @endfor
+                                  
+                                    {{-- <li>
                                         <span class="fa fa-star-half-o"></span>
-                                    </li>
+                                         {{-- <span class="fa fa-star-o"></span> 
+                                    </li> --}}
                                 </ul>
-                                <span class="rating__count">( 26 Ratings )</span>
+                                <span class="rating__count">( {{ $product->ratingcounts }} Ratings )</span>
                             </div>
                             <!-- end /.rating -->
                         </div>
@@ -559,8 +570,10 @@
                                         <li>
                                             <a href="{{ $vendor->linkedin_profile }}">
                                                 <span class="fa fa-dribbble"></span>
+                                               
                                             </a>
                                         </li>
+                                         {{-- <i class="fab fa-facebook"  style='font-size:40px;color: #395799'></i> --}}
                                     </ul>
                                 </div>
                                 <!-- end /.social -->
