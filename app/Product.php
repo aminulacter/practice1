@@ -15,6 +15,9 @@ class Product extends Model
     ];
 
     protected $appends = [/*'like_count',*/ 'ratingcounts'];
+    protected $casts = [
+        'retina_ready' => 'boolean',
+    ];
 
     public function comments()
     {

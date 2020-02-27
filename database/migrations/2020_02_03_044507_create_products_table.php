@@ -30,10 +30,10 @@ class CreateProductsTable extends Migration
             $table->string('vedio')->nullable();
             $table->string('version')->default('1.0.0');
             $table->string('layout')->nullable()->default('responsive');
-            $table->boolean('ratina_ready')->default(true);
+            $table->boolean('retina_ready')->default(true);
             $table->text('files_included')->nullable();
             $table->text('browser')->nullable();
-            $table->boolean('bootstrap')->default(true);
+            $table->string('bootstrap')->default('BootStrap 4');
             $table->timestamps();
            
             //$table->foreign('user_id')->references('id')->on('users')->onDelete('set null');

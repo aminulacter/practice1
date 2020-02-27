@@ -25,7 +25,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('product.create');
     }
 
     /**
@@ -47,18 +47,19 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        // $product = Product::with(['user', 'users', 'categories'])->find($id);
         //dd($product->ratingcounts);
         $comments = $product->comments()->whereNull('comment_id')
             ->with('user')
             ->with('commentReplies')
             ->get();
         
-
+       
         $ratingComments = $comments->filter(function ($comment, $key) {
             return $comment->ratingComment == 1;
         });
         $vendor = $product->vendor();
-        return view('product', compact('product', 'comments', 'ratingComments', 'vendor'));
+        return view('product.show', compact('product', 'comments', 'ratingComments', 'vendor'));
     }
 
     /**

@@ -59,6 +59,7 @@
      <script src="{{ asset('js/vendor/slick.min.js') }}"></script>
     <script src="{{ asset('js/dashboard.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+    @yield('extrajs')
     {{-- <script src="{{ asset('js/map.js') }}"></script> --}}
     <!-- endinject -->
 </body>

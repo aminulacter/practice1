@@ -144,7 +144,7 @@
                                 </li>
                                 <li>
                                     <a href="#product-review" aria-controls="product-review" role="tab" data-toggle="tab">Reviews
-                                        <span>(35)</span>
+                                    <span>({{ $ratingComments->count()}})</span>
                                     </a>
                                 </li>
                                 <li>
@@ -488,11 +488,11 @@
                             <ul class="infos">
                                 <li>
                                     <p class="data-label">Released</p>
-                                    <p class="info">{{ $product->created_at }}</p>
+                                    <p class="info">{{ $product->created_at->toFormattedDateString() }}</p>
                                 </li>
                                 <li>
                                     <p class="data-label">Updated</p>
-                                    <p class="info">{{ $product->created_at }} </p>
+                                    <p class="info">{{ $product->updated_at->toFormattedDateString() }} </p>
                                 </li>
                                 <li>
                                     <p class="data-label">Version</p>
@@ -500,7 +500,19 @@
                                 </li>
                                 <li>
                                     <p class="data-label">Category</p>
-                                    <p class="info">Corporate & Business</p>
+                                    <p class="info">
+                                        @foreach ($product->categories as $item)
+                                         @if ($loop->last)
+                                             & 
+                                        @elseif ($loop->first)
+                                               
+                                        @else      , 
+                                         
+                                        @endif
+                                         {{ $item->name }}
+                                            
+                                        @endforeach
+                                    </p>
                                 </li>
                                 <li>
                                     <p class="data-label">Layout</p>
@@ -508,7 +520,7 @@
                                 </li>
                                 <li>
                                     <p class="data-label">Retina Ready</p>
-                                <p class="info">{{ $product->retina_ready }}</p>
+                                <p class="info">{{ $product->retina_ready ? 'Yes': 'No' }}</p>
                                 </li>
                                 <li>
                                     <p class="data-label">Files Included</p>
@@ -520,7 +532,7 @@
                                 </li>
                                 <li>
                                     <p class="data-label">Bootstrap</p>
-                                    <p class="info">Bootstrap 4</p>
+                                    <p class="info">{{ $product->bootstrap }}</p>
                                 </li>
                                 <li>
                                     <p class="data-label">Tags</p>
