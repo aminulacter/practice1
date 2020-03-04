@@ -53,8 +53,8 @@
     <script src="{{ asset('js/vendor/jquery.counterup.min.js') }}"></script>
     <script src="{{ asset('js/vendor/jquery.easing1.3.js') }}"></script>
       <script src="{{ asset('js/vendor/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('js/vendor/tether.min.js') }}"></script>
-    <script src="{{ asset('js/vendor/trumbowyg.min.js') }}"></script>
+    {{-- <script src="{{ asset('js/vendor/tether.min.js') }}"></script> --}}
+    {{-- <script src="{{ asset('js/vendor/trumbowyg.min.js') }}"></script> --}}
     <script src="{{ asset('js/vendor/waypoints.min.js') }}"></script>
      <script src="{{ asset('js/vendor/slick.min.js') }}"></script>
     <script src="{{ asset('js/dashboard.js') }}"></script>

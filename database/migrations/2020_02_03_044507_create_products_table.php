@@ -20,7 +20,6 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->mediumText('details');
             $table->mediumText('description');
-            $table->double('price', 8, 2);
             $table->string('highlights')->nullable();
             $table->unsignedBigInteger('favorite_count')->default(0);
             $table->decimal('rating', 3, 1)->default(0);

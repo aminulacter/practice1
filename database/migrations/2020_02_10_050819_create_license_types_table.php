@@ -15,8 +15,9 @@ class CreateLicenseTypesTable extends Migration
     {
         Schema::create('license_types', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('product_id');
             $table->string('type');
-            $table->float('ratio');
+            $table->float('price');
             $table->timestamps();
         });
     }

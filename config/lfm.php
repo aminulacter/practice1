@@ -56,6 +56,12 @@ return [
                 'image/png',
                 'image/gif',
                 'image/svg+xml',
+                'application/pdf',
+                'application/msword',
+                'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+                'application/x-rar-compressed',
+                'application/zip'
+
             ],
         ],
         'image' => [

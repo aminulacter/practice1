@@ -98,7 +98,8 @@
 
                 <div class="row">
                     <div class="col-lg-8 col-md-7">
-                        <form action="#">
+                        <form action="{{ route('products.store')}}" method="POST">
+                        @csrf
                             <div class="upload_modules">
                                 <div class="modules__title">
                                     <h3>Item Name & Description</h3>
@@ -106,11 +107,24 @@
                                 <!-- end /.module_title -->
 
                                 <div class="modules__content">
+                                  
+
                                     <div class="form-group">
+                                        <label for="product_name">Product Name
+                                            <span>(Max 100 characters)</span>
+                                        </label>
+                                        <input type="text" id="product_name" name="name" class="text_field" placeholder="Enter your product name here...">
+                                    </div>
+
+                                    <div class="form-group no-margin">
+                                        <p class="label">Product Description</p>
+                                         <textarea class="form-control" id="summary-ckeditor" name="description"></textarea>
+                                    </div>
+                                       <div class="form-group">
                                         <label for="category">Select Category</label>
                                         <div class="select-wrap select-wrap2">
-                                            <select name="country" id="category" class="text_field">
-                                                <option value="">Select one</option>
+                                            <select name="categories" id="category" multiple class="text_field">
+                                               
                                                 <option value="wordpress">Wordpress</option>
                                                 <option value="html">Html</option>
                                                 <option value="graphic">Graphics</option>
@@ -118,23 +132,13 @@
                                                 <option value="music">Music</option>
                                                 <option value="video">Video</option>
                                             </select>
-                                            <span class="lnr lnr-chevron-down"></span>
+                                            
                                         </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="product_name">Product Name
-                                            <span>(Max 100 characters)</span>
-                                        </label>
-                                        <input type="text" id="product_name" class="text_field" placeholder="Enter your product name here...">
-                                    </div>
-
-                                    <div class="form-group no-margin">
-                                        <p class="label">Product Description</p>
-                                         <textarea class="form-control" id="summary-ckeditor" name="summary-ckeditor"></textarea>
                                     </div>
                                 </div>
                                 <!-- end /.modules__content -->
+                               
+                               
                             </div>
                             <!-- end /.upload_modules -->
 
@@ -151,42 +155,52 @@
                                                 <span>(JPEG or PNG 100x100px)</span>
                                             </p>
 
-                                            <div class="custom_upload">
-                                                <label for="thumbnail">
-                                                    <input type="file" id="thumbnail" class="files">
-                                                    <span class="btn btn--round btn--sm">Choose File</span>
-                                                </label>
-                                            </div>
                                            
-                                             {{-- <div class="input-group">
-                                                    <span class="input-group-btn">
-                                                        <a id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-primary">
+                                           
+                                             <div class="input-group" id="app">
+
+                                                    <span class="btn btn--round btn--sm">
+                                                        <a id="limage1" data-input="image1" data-preview="holder" class="btn btn-primary">
                                                         <i class="fa fa-picture-o"></i> Choose
                                                         </a>
                                                     </span>
-                                                    <input id="thumbnail" class="form-control" type="text" name="filepath">
+                                                    <input id="image1" class="form-control" type="text" name="image" >
                                                     </div>
-                                                    <img id="holder" style="margin-top:15px;max-height:100px;"> --}}
-                                            <!-- end /.custom_upload -->
+                                                    <img id="holder" style="margin-top:15px;max-height:100px;">
 
-                                            <div class="progress_wrapper">
-                                                <div class="labels clearfix">
-                                                    <p>Thumbnail.jpg</p>
-                                                    <span data-width="89">89%</span>
-                                                </div>
-                                                <div class="progress">
-                                                    <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 89%;">
-                                                        <span class="sr-only">70% Complete</span>
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <!-- end /.progress_wrapper -->
 
-                                            <span class="lnr upload_cross lnr-cross"></span>
+                                           
                                         </div>
                                         <!-- end /.upload_wrapper -->
                                     </div>
                                     <!-- end /.form-group -->
+
+                                       <div class="form-group">
+                                        <div class="upload_wrapper">
+                                            <p>Upload Images
+                                                <span>(JPEG or PNG 100x100px)</span>
+                                            </p>
+
+                                           
+                                           
+                                             <div class="input-group" id="app">
+
+                                                    <span class="btn btn--round btn--sm">
+                                                        <a id="limage2" data-input="image2" data-preview="holder" class="btn btn-primary">
+                                                        <i class="fa fa-picture-o"></i> Choose
+                                                        </a>
+                                                    </span>
+                                                    <input id="image2" class="form-control" type="text" name="images">
+                                                    </div>
+                                                    <img id="holder" style="margin-top:15px;max-height:100px;">
+
+                                            <!-- end /.progress_wrapper -->
+
+                                           
+                                        </div>
+                                        <!-- end /.upload_wrapper -->
+                                    </div>
 
                                     <div class="form-group">
                                         <div class="upload_wrapper">
@@ -194,69 +208,26 @@
                                                 <span>(ZIP - All files)</span>
                                             </p>
 
-                                            <div class="custom_upload">
-                                                <label for="main_file">
-                                                    <input type="file" id="main_file" class="files">
-                                                    <span class="btn btn--round btn--sm">Choose File</span>
-                                                </label>
-                                            </div>
-                                            <!-- end /.custom_upload -->
+                                            <div class="input-group" id="app">
 
-                                            <div class="progress_wrapper">
-                                                <div class="labels clearfix">
-                                                    <p>WordPress Blog Theme.zip</p>
-                                                    <span data-width="90">90%</span>
-                                                </div>
-                                                <div class="progress">
-                                                    <div class="progress-bar" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%;">
-                                                        <span class="sr-only">90% Complete</span>
+                                                    <span class="btn btn--round btn--sm">
+                                                        <a id="lfile1" data-input="fileinput1" data-preview="holder" class="btn btn-primary">
+                                                        <i class="fa fa-picture-o"></i> Choose
+                                                        </a>
+                                                    </span>
+                                                    <input id="fileinput1" class="form-control" type="text" name="files">
                                                     </div>
-                                                </div>
-                                            </div>
-                                            <!-- end /.progress_wrapper -->
-
-                                            <span class="lnr upload_cross lnr-cross"></span>
+                                            <!-- end /.custom_upload -->
                                         </div>
-                                        <!-- end /.upload_wrapper -->
+                                          
                                     </div>
                                     <!-- end /.form-group -->
 
-                                    <div class="form-group">
-                                        <div class="upload_wrapper">
-                                            <p>Upload Screenshots
-                                                <span>(ZIP file of images)</span>
-                                            </p>
-
-                                            <div class="custom_upload">
-                                                <label for="screenshot">
-                                                    <input type="file" id="screenshot" class="files">
-                                                    <span class="btn btn--round btn--sm">Choose File</span>
-                                                </label>
-                                            </div>
-                                            <!-- end /.custom_upload -->
-
-                                            <div class="progress_wrapper">
-                                                <div class="labels clearfix">
-                                                    <p>Thumbnail.jpg</p>
-                                                    <span data-width="78">78%</span>
-                                                </div>
-                                                <div class="progress">
-                                                    <div class="progress-bar" role="progressbar" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" style="width: 78%;">
-                                                        <span class="sr-only">78% Complete</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- end /.progress_wrapper -->
-
-                                            <span class="lnr upload_cross lnr-cross"></span>
-                                        </div>
-                                        <!-- end /.upload_wrapper -->
-                                    </div>
-                                    <!-- end /.form-group -->
-                                </div>
-                                <!-- end /.upload_modules -->
+                                
+                                 
+                                 </div>
                             </div>
-                            <!-- end /.upload_modules -->
+                            <!-- end /.upload_modules --> 
 
                             <div class="upload_modules">
                                 <div class="modules__title">
@@ -269,7 +240,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="selected">Files Included</label>
-                                                <select name="country" id="selected" multiple class="text_field">
+                                                <select name="files_included" id="selected" multiple class="text_field">
                                                     <option value="php">php</option>
                                                     <option value="html">Html</option>
                                                     <option value="psd">psd</option>
@@ -284,7 +255,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="browsers">Compatible Browsers</label>
-                                                <select name="country" id="browsers" multiple class="text_field">
+                                                <select name="browsers" id="browsers" multiple class="text_field">
                                                     <option value="ie8">IE8</option>
                                                     <option value="ie9">IE9</option>
                                                     <option value="chrome">Chrome</option>
@@ -303,7 +274,7 @@
                                             <div class="form-group">
                                                 <label for="columns">Columns</label>
                                                 <div class="select-wrap select-wrap2">
-                                                    <select name="country" id="columns" class="text_field">
+                                                    <select name="columns" id="columns" class="text_field">
                                                         <option value="">Choose Columns</option>
                                                         <option value="2">2</option>
                                                         <option value="3">3</option>
@@ -318,7 +289,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label for="dimension">Item Dimensions</label>
-                                                <input type="text" id="dimension" class="text_field" placeholder="Ex: 1920x6000.">
+                                                <input type="text" id="dimension" class="text_field" placeholder="Ex: 1920x6000." name="dimension">
                                             </div>
                                         </div>
                                         <!-- end /.col-md-6 -->
@@ -384,7 +355,30 @@
                                         <label for="tags">Item Tags
                                             <span>(Max 10 tags)</span>
                                         </label>
-                                        <textarea name="tags" id="tags" class="text_field" placeholder="Enter your item tags here..."></textarea>
+                                        <div class="row">
+                                            <div class="d-flex flex-row col-md-4">
+                                               <div class="d-flex flex-row row">
+                                                     <input type="checkbox" id="vehicle1" name="vehicle" value="Bike" >
+                                                 
+                                                     <label for="vehicle1" style="margin-bottom: 0px; margin-top: 10px; padding-left: 10px"> I have a bike</label>
+                                              
+                                               </div>
+                                                
+                                               
+                                               
+                                            </div>
+                                            <div class="d-flex  col-md-4">
+                                                <input type="checkbox" id="vehicle2" name="vehicle" value="Car" >
+                                               <label for="vehicle1" style="margin-bottom: 0px; margin-top: 10px; padding-left: 10px"> I have a car</label> 
+                                                {{-- <p  style="font-size:20px" > I have a car</p> --}}
+                                            </div>
+                                            <div class="d-flex flex-row col-md-4">
+                                                <input type="checkbox" id="vehicle3" name="vehicle" value="Boat" >
+                                                <label for="vehicle1" style="margin-bottom: 0px; margin-top: 10px; padding-left: 10px" > I have a boat</label>
+                                            </div>
+                                  
+                                        </div>
+                                       
                                     </div>
                                 </div>
                                 <!-- end /.upload_modules -->
@@ -404,7 +398,7 @@
                                                 <label for="rlicense">Regular License</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon">$</span>
-                                                    <input type="text" id="rlicense" class="text_field" placeholder="00.00">
+                                                    <input type="text" id="rlicense" class="text_field" placeholder="00.00" name="rlicense">
                                                 </div>
                                             </div>
                                         </div>
@@ -415,7 +409,7 @@
                                                 <label for="exlicense">Extended License</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon">$</span>
-                                                    <input type="text" id="exlicense" class="text_field" placeholder="00.00">
+                                                    <input type="text" id="exlicense" class="text_field" placeholder="00.00" name="exlicense">
                                                 </div>
                                             </div>
                                         </div>
@@ -430,7 +424,8 @@
                                                 <label for="single_use">Single User License</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon">$</span>
-                                                    <input type="text" id="single_use" class="text_field" placeholder="00.00">
+                                                    <input type="text" id="single_use" class="text_field" placeholder="00.00" name="SingleSiteLicense">
+
                                                 </div>
                                             </div>
                                         </div>
@@ -440,7 +435,7 @@
                                                 <label for="double_use">2 User License</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon">$</span>
-                                                    <input type="text" id="double_use" class="text_field" placeholder="00.00">
+                                                    <input type="text" id="double_use" class="text_field" placeholder="00.00" name="2SiteLicense">
                                                 </div>
                                             </div>
                                         </div>
@@ -450,7 +445,7 @@
                                                 <label for="multi_user">Multi User License</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon">$</span>
-                                                    <input type="text" id="multi_user" class="text_field" placeholder="00.00">
+                                                    <input type="text" id="multi_user" class="text_field" placeholder="00.00" name="MultipleLicense">
                                                 </div>
                                             </div>
                                         </div>
@@ -549,8 +544,11 @@
 @endsection
 
 @section('extrajs')
-      <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
-       <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
+<script src="{{ asset('/js/app.js')}}"></script>
+
+  <script src="{{ asset('ckeditor/ckeditor.js') }}"></script>
+  <script src="{{ asset('vendor/laravel-filemanager/js/stand-alone-button.js') }}"></script>
+      
   <script>
   var options = {
     filebrowserImageBrowseUrl: '/filemanager?type=Images',
@@ -560,8 +558,13 @@
   };
 
     CKEDITOR.replace( 'summary-ckeditor', options );
- $('#lfm').filemanager('image');
-    
+
+    //file manager
+     var route_prefix = "filemanager";
+     $('#limage1').filemanager('image');
+      $('#limage2').filemanager('image');
+    // fileinput1
+     $('#lfile1').filemanager('Files');
     // CKEDITOR.config.height = 300;
     // CKEDITOR.config.width = 600;
     // CKEDITOR.config.extraPlugins = "Youtube";

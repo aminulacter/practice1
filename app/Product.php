@@ -90,7 +90,10 @@ class Product extends Model
             })
             ->get();
     }
-    
+    public function licences_types()
+    {
+        return $this->hasMany('App\LicenseType');
+    }
  
     public function saveComment($commentBody, $userId, $ratingComment = false)
     {

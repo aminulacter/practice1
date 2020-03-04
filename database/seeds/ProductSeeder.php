@@ -18,7 +18,6 @@ class ProductSeeder extends Seeder
                 'slug' => 'laptop-' . $i,
                 'user_id'=> rand(5, 15),
                 'details' => [13, 14, 15][array_rand([13, 14, 15])] . ' inch, ' . [1, 2, 3][array_rand([1, 2, 3])] . ' TB SSD, 32GB RAM',
-                'price' => rand(100, 1000),
                 'description' => 'Lorem ' . $i . ' ipsum dolor sit amet, consectetur adipisicing elit. Ipsum temporibus iusto ipsa, asperiores voluptas unde aspernatur praesentium in? Aliquam, dolore!',
                 'image' => 'products/dummy/laptop-' . $i . '.jpg',
                 'images' => '["products\/dummy\/laptop-2.jpg","products\/dummy\/laptop-3.jpg","products\/dummy\/laptop-4.jpg"]',
@@ -34,7 +33,6 @@ class ProductSeeder extends Seeder
                 'slug' => 'desktop-' . $i,
                 'user_id' =>  rand(5, 15),
                 'details' => [24, 25, 27][array_rand([24, 25, 27])] . ' inch, ' . [1, 2, 3][array_rand([1, 2, 3])] . ' TB SSD, 32GB RAM',
-                'price' => rand(100, 1000),
                 'description' => 'Lorem ' . $i . ' ipsum dolor sit amet, consectetur adipisicing elit. Ipsum temporibus iusto ipsa, asperiores voluptas unde aspernatur praesentium in? Aliquam, dolore!',
                 'image' => 'products/dummy/desktop-' . $i . '.jpg',
                 'images' => '["products\/dummy\/laptop-2.jpg","products\/dummy\/laptop-3.jpg","products\/dummy\/laptop-4.jpg"]',
@@ -47,7 +45,6 @@ class ProductSeeder extends Seeder
                 'slug' => 'phone-' . $i,
                 'user_id' =>  rand(5, 15),
                 'details' => [16, 32, 64][array_rand([16, 32, 64])] . 'GB, 5.' . [7, 8, 9][array_rand([7, 8, 9])] . ' inch screen, 4GHz Quad Core',
-                'price' => rand(100, 1000),
                 'description' => 'Lorem ' . $i . ' ipsum dolor sit amet, consectetur adipisicing elit. Ipsum temporibus iusto ipsa, asperiores voluptas unde aspernatur praesentium in? Aliquam, dolore!',
                 'image' => 'products/dummy/phone-' . $i . '.jpg',
                 'images' => '["products\/dummy\/laptop-2.jpg","products\/dummy\/laptop-3.jpg","products\/dummy\/laptop-4.jpg"]',
@@ -60,7 +57,6 @@ class ProductSeeder extends Seeder
                 'slug' => 'tablet-' . $i,
                 'user_id' =>  rand(5, 15),
                 'details' => [16, 32, 64][array_rand([16, 32, 64])] . 'GB, 5.' . [10, 11, 12][array_rand([10, 11, 12])] . ' inch screen, 4GHz Quad Core',
-                'price' => rand(100, 1000),
                 'description' => 'Lorem ' . $i . ' ipsum dolor sit amet, consectetur adipisicing elit. Ipsum temporibus iusto ipsa, asperiores voluptas unde aspernatur praesentium in? Aliquam, dolore!',
                 'image' => 'products/dummy/tablet-' . $i . '.jpg',
                 'images' => '["products\/dummy\/laptop-2.jpg","products\/dummy\/laptop-3.jpg","products\/dummy\/laptop-4.jpg"]',
@@ -73,7 +69,6 @@ class ProductSeeder extends Seeder
                 'slug' => 'tv-' . $i,
                 'user_id' => rand(5, 15),
                 'details' => [46, 50, 60][array_rand([7, 8, 9])] . ' inch screen, Smart TV, 4K',
-                'price' => rand(100, 1000),
                 'description' => 'Lorem ' . $i . ' ipsum dolor sit amet, consectetur adipisicing elit. Ipsum temporibus iusto ipsa, asperiores voluptas unde aspernatur praesentium in? Aliquam, dolore!',
                 'image' => 'products/dummy/tv-' . $i . '.jpg',
                 'images' => '["products\/dummy\/laptop-2.jpg","products\/dummy\/laptop-3.jpg","products\/dummy\/laptop-4.jpg"]',
@@ -86,7 +81,6 @@ class ProductSeeder extends Seeder
                 'slug' => 'camera-' . $i,
                 'user_id' => rand(5, 15),
                 'details' => 'Full Frame DSLR, with 18-55mm kit lens.',
-                'price' => rand(100, 1000),
                 'description' => 'Lorem ' . $i . ' ipsum dolor sit amet, consectetur adipisicing elit. Ipsum temporibus iusto ipsa, asperiores voluptas unde aspernatur praesentium in? Aliquam, dolore!',
                 'image' => 'products/dummy/camera-' . $i . '.jpg',
                 'images' => '["products\/dummy\/laptop-2.jpg","products\/dummy\/laptop-3.jpg","products\/dummy\/laptop-4.jpg"]',
@@ -99,7 +93,6 @@ class ProductSeeder extends Seeder
                 'slug' => 'appliance-' . $i,
                 'user_id' => rand(5, 15),
                 'details' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis, dolorum!',
-                'price' => rand(100, 1000),
                 'description' => 'Lorem ' . $i . ' ipsum dolor sit amet, consectetur adipisicing elit. Ipsum temporibus iusto ipsa, asperiores voluptas unde aspernatur praesentium in? Aliquam, dolore!',
                 'image' => 'products/dummy/appliance-' . $i . '.jpg',
                 'images' => '["products\/dummy\/laptop-2.jpg","products\/dummy\/laptop-3.jpg","products\/dummy\/laptop-4.jpg"]',
@@ -112,6 +105,14 @@ class ProductSeeder extends Seeder
         foreach ($products as $product) {
             for ($i = 0; $i < 5; $i++) {
                 $product->faqs()->save(factory(App\Question::class)->make());
+            }
+        }
+        foreach ($products as $product) {
+            $license_type1=["Single Site License", "2 Site License", "MultipleSiteLicense"];
+            $price = [10, 20, 30];
+            for ($i=0; $i <3; $i++) {
+                $license_type = new App\LicenseType(['type' => $license_type1[$i], 'price' => $price[$i]]);
+                $product->licences_types()->save($license_type);
             }
         }
     }
