@@ -18,8 +18,23 @@
      </a>
    </span>
    <input id="thumbnail" class="form-control" type="text" name="filepath">
+   <div style="padding-top: 50px">
+    <create-product inline-template>
+    <multiselect
+    v-model="value"
+    :options="options"
+    :multiple="true"
+    label="tags"
+    name="tags"
+    placeholder="Please select tags"
+   ></multiselect>
+    </create-product>
+   </div>
  </div>
  <img id="holder" style="margin-top:15px;max-height:100px;">
+
+ 
+ 
 
  <script src="{{ asset('/js/app.js')}}"></script>
 

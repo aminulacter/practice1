@@ -29,7 +29,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('product.create');
+        return view('product.create1');
     }
 
     /**
@@ -57,8 +57,8 @@ class ProductController extends Controller
             ->with('user')
             ->with('commentReplies')
             ->get();
-        
-       
+
+
         $ratingComments = $comments->filter(function ($comment, $key) {
             return $comment->ratingComment == 1;
         });
