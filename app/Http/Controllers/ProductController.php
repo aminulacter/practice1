@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Product;
 use Illuminate\Http\Request;
 use App\Comment;
+use App\Category;
+use App\Tag;
 
 class ProductController extends Controller
 {
@@ -29,7 +31,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('product.create1');
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('product.create1', compact('categories', 'tags'));
     }
 
     /**
@@ -40,7 +44,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request );
+        dd($request->all());
     }
 
     /**

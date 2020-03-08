@@ -98,7 +98,7 @@
                 
                 <div class="row">
                     <div class="col-lg-8 col-md-7">
-                        <create-product inline-template>
+                        <create-product :categories="{{$categories}}" :tags="{{ $tags }}" inline-template>
                             
                                 <form action="{{ route('products.store')}}" method="POST">
                                 @csrf
@@ -124,19 +124,16 @@
                                             </div>
                                             <div class="form-group">
                                                 <label for="category">Select Category</label>
-                                                <div class="select-wrap select-wrap2">
-
-                                                    <select name="categories" id="category" multiple class="text_field">
+                                               
+                                                    <multiselect
+                                                        v-model="selectedCategory"
+                                                        :multiple="true"
+                                                        :options="Category"
+                                                        name="categories"
+                                                        placeholder="Please select the Categories">
+                                                      </multiselect>
                                                     
-                                                        <option value="wordpress">Wordpress</option>
-                                                        <option value="html">Html</option>
-                                                        <option value="graphic">Graphics</option>
-                                                        <option value="illustration">Illustration</option>
-                                                        <option value="music">Music</option>
-                                                        <option value="video">Video</option>
-                                                    </select>
-                                                    
-                                                </div>
+                                                
                                             </div>
                                         </div>
                                         <!-- end /.modules__content -->
@@ -243,14 +240,13 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="selected">Files Included</label>
-                                                        <select name="files_included" id="selected" multiple class="text_field">
-                                                            <option value="php">php</option>
-                                                            <option value="html">Html</option>
-                                                            <option value="psd">psd</option>
-                                                            <option value="js">javascript</option>
-                                                            <option value="coffee">coffeescript</option>
-                                                            <option value="video">Video</option>
-                                                        </select>
+                                                       <multiselect
+                                                        v-model="selectedFiles"
+                                                        :multiple="true"
+                                                        :options="files"
+                                                         name="files"
+                                                        placeholder="Please select the Files Included">
+                                                      </multiselect>
                                                     </div>
                                                     <!-- end /.form-group -->
                                                 </div>
@@ -258,14 +254,13 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="browsers">Compatible Browsers</label>
-                                                        <select name="browsers" id="browsers" multiple class="text_field">
-                                                            <option value="ie8">IE8</option>
-                                                            <option value="ie9">IE9</option>
-                                                            <option value="chrome">Chrome</option>
-                                                            <option value="firefox">firefox</option>
-                                                            <option value="safari">safari</option>
-                                                            <option value="video">Video</option>
-                                                        </select>
+                                                       <multiselect
+                                                        v-model="selectedbrowser"
+                                                        :multiple="true"
+                                                        :options="browser"
+                                                         name="browsers"
+                                                        placeholder="Please select the Browsers">
+                                                      </multiselect>
                                                     </div>
                                                     <!-- end /.form-group -->
                                                 </div>
@@ -275,16 +270,17 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
-                                                        <label for="columns">Columns</label>
-                                                        <div class="select-wrap select-wrap2">
-                                                            <select name="columns" id="columns" class="text_field">
-                                                                <option value="">Choose Columns</option>
-                                                                <option value="2">2</option>
-                                                                <option value="3">3</option>
-                                                                <option value="4">4+</option>
-                                                            </select>
-                                                            <span class="lnr lnr-chevron-down"></span>
-                                                        </div>
+                                                        <label for="columns">Tags</label>
+                                                       <multiselect
+                                                        v-model="selectedTags"
+                                                        :multiple="true"
+                                                        trackBy="name"
+                                                        :options="optionTags"
+                                                       
+                                                        name="tags"
+                                                        placeholder="Please select the Tags">
+                                                      </multiselect>
+                                                     
                                                     </div>
                                                 </div>
                                                 <!-- end /.col-md-6 -->
@@ -354,39 +350,7 @@
                                             </div>
                                             <!-- end /.row -->
 
-                                            <div class="form-group">
-                                                <label for="tags">Item Tags
-                                                    <span>(Max 10 tags)</span>
-                                                </label>
-                                                <div class="row">
-                                                    <div class="d-flex flex-row col-md-4">
-                                                    <div class="d-flex flex-row row">
-                                                            <input type="checkbox" id="vehicle1" name="vehicle" value="Bike" >
-                                                        
-                                                            <label for="vehicle1" style="margin-bottom: 0px; margin-top: 10px; padding-left: 10px"> I have a bike</label>
-                                                    
-                                                    </div>
-                                                        
-                                                    
-                                                    
-                                                    </div>
-                                                    <div class="d-flex  col-md-4">
-                                                        <input type="checkbox" id="vehicle2" name="vehicle" value="Car" >
-                                                    <label for="vehicle1" style="margin-bottom: 0px; margin-top: 10px; padding-left: 10px"> I have a car</label> 
-                                                        {{-- <p  style="font-size:20px" > I have a car</p> --}}
-                                                    </div>
-                                                    <div class="d-flex flex-row col-md-4">
-                                                        <multiselect
-                                                        v-model="selected1"
-                                                        :multiple="true"
-                                                        :options="options">
-                                                      </multiselect>
-                                                       
-                                                    </div>
-                                        
-                                                </div>
-                                            
-                                            </div>
+                                          
                                         </div>
                                         <!-- end /.upload_modules -->
                                     </div>
