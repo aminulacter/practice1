@@ -30,6 +30,7 @@
         "jquery-bar-rating": "^1.2.2",
         "owl.carousel": "^2.3.4",
         "slick-carousel": "^1.8.1",
-        "trumbowyg": "^2.21.0"
+        "trumbowyg": "^2.21.0",
+        "vue-multiselect": "^2.1.6"
     }
 }
