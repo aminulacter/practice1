@@ -7,7 +7,7 @@ export default {
   data() {
     return {
       selectedTags: null,
-      options: ["list", "of", "optionssdfsdf"],
+      options: ["list", "of", "options"],
       selectedFiles: null,
       files: ["php", "Html", "psd", "javaScript", "coffeScript", "Video"],
       selectedbrowser: null,
