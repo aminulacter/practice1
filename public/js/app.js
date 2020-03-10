@@ -1924,7 +1924,10 @@ __webpack_require__.r(__webpack_exports__);
       files: ["php", "Html", "psd", "javaScript", "coffeScript", "Video"],
       selectedbrowser: null,
       browser: ["IE8", "IE9", "Crome", "firefox", "safari"],
-      selectedCategory: null
+      selectedCategory: null,
+      enabledUserLicense: true,
+      rlicense: null,
+      elicense: null
     };
   },
   computed: {
@@ -1937,6 +1940,15 @@ __webpack_require__.r(__webpack_exports__);
       return this.tags.map(function (tag) {
         return tag.name;
       });
+    }
+  },
+  methods: {
+    checkanddisableUserLicense: function checkanddisableUserLicense($event) {
+      if (event.target.value.length) {
+        this.enabledUserLicense = false;
+      } else event.target.value = null;
+
+      this.rlicense || this.elicense ? this.enabledUserLicense = false : this.enabledUserLicense = true;
     }
   }
 });

@@ -129,10 +129,10 @@
                                                         v-model="selectedCategory"
                                                         :multiple="true"
                                                         :options="Category"
-                                                        name="categories"
+                                                        
                                                         placeholder="Please select the Categories">
                                                       </multiselect>
-                                                    
+                                                     <input type="hidden" :value="selectedCategory"  name="categories">
                                                 
                                             </div>
                                         </div>
@@ -244,9 +244,9 @@
                                                         v-model="selectedFiles"
                                                         :multiple="true"
                                                         :options="files"
-                                                         name="files"
                                                         placeholder="Please select the Files Included">
                                                       </multiselect>
+                                                      <input type="hidden" :value="selectedFiles" name="files_included">
                                                     </div>
                                                     <!-- end /.form-group -->
                                                 </div>
@@ -258,9 +258,10 @@
                                                         v-model="selectedbrowser"
                                                         :multiple="true"
                                                         :options="browser"
-                                                         name="browsers"
+                                                        
                                                         placeholder="Please select the Browsers">
                                                       </multiselect>
+                                                        <input type="hidden" :value="selectedbrowser" name="browsers">
                                                     </div>
                                                     <!-- end /.form-group -->
                                                 </div>
@@ -280,6 +281,7 @@
                                                         name="tags"
                                                         placeholder="Please select the Tags">
                                                       </multiselect>
+                                                       <input type="hidden" :value="selectedTags"  name="tags">
                                                      
                                                     </div>
                                                 </div>
@@ -334,13 +336,13 @@
                                                     <div class="form-group radio-group">
                                                         <p class="label">Retina Ready</p>
                                                         <div class="custom-radio">
-                                                            <input type="radio" id="ryes" class="" name="retina">
+                                                            <input type="radio" id="ryes" class="" name="retina" value="yes">
                                                             <label for="ryes">
                                                                 <span class="circle"></span>Yes</label>
                                                         </div>
 
                                                         <div class="custom-radio">
-                                                            <input type="radio" id="rno" class="" name="retina">
+                                                            <input type="radio" id="rno" class="" name="no">
                                                             <label for="rno">
                                                                 <span class="circle"></span>no</label>
                                                         </div>
@@ -369,7 +371,7 @@
                                                         <label for="rlicense">Regular License</label>
                                                         <div class="input-group">
                                                             <span class="input-group-addon">$</span>
-                                                            <input type="text" id="rlicense" class="text_field" placeholder="00.00" name="rlicense">
+                                                            <input type="text" id="rlicense" class="text_field" placeholder="00.00" name="regularlicense" v-model="rlicense" @blur="checkanddisableUserLicense($event)">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -380,7 +382,7 @@
                                                         <label for="exlicense">Extended License</label>
                                                         <div class="input-group">
                                                             <span class="input-group-addon">$</span>
-                                                            <input type="text" id="exlicense" class="text_field" placeholder="00.00" name="exlicense">
+                                                            <input type="text" id="exlicense" class="text_field" placeholder="00.00" name="extendlicense" v-model="elicense" @blur="checkanddisableUserLicense($event)">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -388,8 +390,9 @@
 
                                             </div>
                                             <!-- end /.row -->
-                                            <div class="or"></div>
-                                            <div class="row">
+                                            
+                                            <div class="row" v-if="enabledUserLicense">
+                                                <div class="or" class="col-md-12"></div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="single_use">Single User License</label>

@@ -12,7 +12,10 @@ export default {
       files: ["php", "Html", "psd", "javaScript", "coffeScript", "Video"],
       selectedbrowser: null,
       browser: ["IE8", "IE9", "Crome", "firefox", "safari"],
-      selectedCategory: null
+      selectedCategory: null,
+      enabledUserLicense: true,
+      rlicense: null,
+      elicense: null
     };
   },
 
@@ -22,6 +25,16 @@ export default {
     },
     optionTags() {
       return this.tags.map(tag => tag.name);
+    }
+  },
+  methods: {
+    checkanddisableUserLicense($event) {
+      if (event.target.value.length) {
+        this.enabledUserLicense = false;
+      } else event.target.value = null;
+      this.rlicense || this.elicense
+        ? (this.enabledUserLicense = false)
+        : (this.enabledUserLicense = true);
     }
   }
 };

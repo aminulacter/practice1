@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Comment;
 use App\Category;
 use App\Tag;
+use Illuminate\Support\Str;
+use App\LicenseType;
 
 class ProductController extends Controller
 {
@@ -44,7 +46,58 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        $request->validate([
+            "name" => 'required',
+            "description" => 'required',
+            "categories" => 'required',
+            "images" => 'required',
+            "files" => 'required',
+            "browsers" => 'required',
+            "tags" => 'required',
+            ]);
+        $product = new Product();
+        $slug = Str::slug($request->name, '-');
+        //dd('aminul');
+        $product->name = $request->name;
+        // dd('aminul');
+
+        $product->slug = $slug;
+        // dd('aminul');
+
+        $product->user_id = auth()->user()->id;
+        // dd('aminul');
+        $product->details  = $request->description;
+        $product->description = $request->description;
+        // dd('aminul');
+
+        $product->image = $request->image;
+        //dd('aminul');
+
+        $product->images = $request->images;
+        $product->files_included = $request->files_included;
+        $product->images = $request->browsers;
+        $product->version = $request->version;
+        //dd('aminul');
+
+        //$product->images = $browsers->browsers;
+        $product->retina_ready = $request->retina === 'yes'? true : false ;
+        
+
+        //dd($product);
+
+        $product->save();
+        
+
+
+        $product->categories()->sync(explode(',', $request->categories));
+        $product->tags()->sync(explode(',', $request->tags));
+        $licensetype = ["regularlicense", "extendlicense", "SingleSiteLicense","2SiteLicense","MultipleLicense"];
+        foreach ($licensetype as $license) {
+            if ($request->has($license)) {
+                $newLicense = new LicenseType(['type' => $license, 'price' => $request->$license]);
+                $product->licences_types()->save($newLicense);
+            }
+        }
     }
 
     /**
