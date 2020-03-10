@@ -14,7 +14,7 @@ class Product extends Model
         'name', 'slug', 'details', 'description', 'image', 'images', 'vedio', 'version', 'layout', 'ratina_ready', 'files_included', 'browser', 'bootstrap', 'highlights', 'user_id'
     ];
 
-    protected $appends = [/*'like_count',*/ 'ratingcounts'];
+    protected $appends = [/*'like_count',*/'ratingcounts'];
     protected $casts = [
         'retina_ready' => 'boolean',
     ];
@@ -23,7 +23,7 @@ class Product extends Model
     {
         return $this->morphMany('App\Comment', 'commentable');
     }
-    
+
     public function reviews()
     {
         return $this->hasMany('App\Review');
@@ -31,7 +31,7 @@ class Product extends Model
 
     public function tags()
     {
-        return $this->hasMany('App\Tag', 'tag_products')->withTimestamps();
+        return $this->belongsToMany('App\Tag', 'tag_products')->withTimestamps();
     }
     public function categories()
     {
@@ -46,9 +46,9 @@ class Product extends Model
     public function status($userId)
     {
         return ProductUser::where('user_id', $userId)
-                    ->where('product_id', $this->id)
-                    ->first()
-                    ->relation;
+            ->where('product_id', $this->id)
+            ->first()
+            ->relation;
     }
     public function user()
     {
@@ -94,7 +94,7 @@ class Product extends Model
     {
         return $this->hasMany('App\LicenseType');
     }
- 
+
     public function saveComment($commentBody, $userId, $ratingComment = false)
     {
         $comment = new Comment();

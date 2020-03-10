@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Comment;
 use App\Category;
 use App\Tag;
+use Illuminate\Support\Str;
+use App\LicenseType;
 
 class ProductController extends Controller
 {
@@ -44,7 +46,47 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+
+        // $request->validate([
+        //     "name" => 'required',
+        //     "description" => 'required',
+        //     "categories" => 'required',
+        //     "images" => 'required',
+        //     "files" => 'required',
+        //     "browsers" => 'required',
+        //     "tags" => 'required',
+        // ]);
+        $product = new Product();
+        $slug = Str::slug($request->name, '-');
+
+        $product->name = $request->name;
+        $product->slug = $slug;
+        $product->user_id = auth()->user()->id;
+        $product->details  = $request->description;
+        $product->description = $request->description;
+        $product->image = $request->image;
+        $product->images = $request->images;
+        $product->files_included = $request->files_included;
+        $product->images = $request->browsers;
+        $product->version = $request->version;
+        $product->retina_ready = $request->retina === 'yes' ? true : false;
+        $product->save();
+
+
+        foreach (explode(',', $request->categories) as $category) {
+            $product->categories()->sync(Category::where('name', $category)->first()->id);
+        }
+        foreach (explode(',', $request->tags) as $tag) {
+            $product->tags()->sync(Tag::where('name', $tag)->first()->id);
+        }
+
+        $licensetype = ["regularlicense", "extendlicense", "SingleSiteLicense", "2SiteLicense", "MultipleLicense"];
+        foreach ($licensetype as $license) {
+            if ($request->has($license) && $request->$license) {
+                $newLicense = new LicenseType(['type' => $license, 'price' => $request->$license]);
+                $product->licences_types()->save($newLicense);
+            }
+        }
     }
 
     /**

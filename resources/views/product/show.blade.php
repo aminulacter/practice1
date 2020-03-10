@@ -161,7 +161,7 @@
                             <div class="fade show tab-pane product-tab active" id="product-details">
                                
                                 <div class="tab-content-wrapper">
-                                    {{ $product->description }}
+                                    {!! $product->description !!}
                                 </div>
                             </div>
                             <!-- end /.tab-content -->
@@ -185,7 +185,7 @@
                                                                 <h4>{{ $comment->user->name }}</h4>
                                                             </a>
                                                             <span>{{ $comment->updated_at->diffForHumans() }}</span>
-                                                        </div>
+                                                        <div>
                                                         <span class="comment-tag buyer">Purchased</span>
                                                         <a href="#" class="reply-link">Reply</a>
                                                     </div>
@@ -457,9 +457,9 @@
                                         <li>
                                             <span class="fa fa-star"></span>
                                         </li> 
-                                        @elseif($i == floor($product->rating) )
+                                        @elseif($i == floor($product->rating) && ($i > 0) )
                                         <li>
-                                             <span class="fa fa-star-half-o"></span> 
+                                             <span class="fa fa-star-half-o"></span>
                                         </li> 
                                         @else
                                         <li>
