@@ -46,16 +46,15 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-
-        // $request->validate([
-        //     "name" => 'required',
-        //     "description" => 'required',
-        //     "categories" => 'required',
-        //     "images" => 'required',
-        //     "files" => 'required',
-        //     "browsers" => 'required',
-        //     "tags" => 'required',
-        // ]);
+        $request->validate([
+            "name" => 'required',
+            "description" => 'required',
+            "categories" => 'required',
+            "images" => 'required',
+            "files_included" => 'required',
+            "browsers" => 'required',
+            "tags" => 'required',
+        ]);
         $product = new Product();
         $slug = Str::slug($request->name, '-');
 
@@ -67,7 +66,7 @@ class ProductController extends Controller
         $product->image = $request->image;
         $product->images = $request->images;
         $product->files_included = $request->files_included;
-        $product->images = $request->browsers;
+        $product->browsers = $request->browsers;
         $product->version = $request->version;
         $product->retina_ready = $request->retina === 'yes' ? true : false;
         $product->save();
@@ -108,8 +107,9 @@ class ProductController extends Controller
         $ratingComments = $comments->filter(function ($comment, $key) {
             return $comment->ratingComment == 1;
         });
+        $licenses = $product->licences_types()->orderBy('price')->get();
         $vendor = $product->vendor();
-        return view('product.show', compact('product', 'comments', 'ratingComments', 'vendor'));
+        return view('product.show', compact('product', 'comments', 'ratingComments', 'vendor', 'licenses'));
     }
 
     /**

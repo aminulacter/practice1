@@ -43,35 +43,17 @@
                     <div class="item-preview">
                         <div class="item__preview-slider">
                             <div class="prev-slide">
-                                <img src="{{ asset('images/itprv.jpg') }}" alt="Keep calm this isn't the end of the world, the preview is just missing.">
+                                <img src="{{ $product->image }}" alt="Keep calm this isn't the end of the world, the preview is just missing.">
                             </div>
-                            <div class="prev-slide">
-                                <img src="{{ asset('images/itprv.jpg') }}" alt="Keep calm this isn't the end of the world, the preview is just missing.">
-                            </div>
-                            <div class="prev-slide">
-                                <img src="{{ asset('images/itprv.jpg') }}" alt="Keep calm this isn't the end of the world, the preview is just missing.">
-                            </div>
-                            <div class="prev-slide">
-                                <img src="{{ asset('images/itprv.jpg') }}" alt="Keep calm this isn't the end of the world, the preview is just missing.">
-                            </div>
-                            <div class="prev-slide">
-                                <img src="{{ asset('images/itprv.jpg') }}" alt="Keep calm this isn't the end of the world, the preview is just missing.">
-                            </div>
-                            <div class="prev-slide">
-                                <img src="{{ asset('images/itprv.jpg') }}" alt="Keep calm this isn't the end of the world, the preview is just missing.">
-                            </div>
-                            <div class="prev-slide">
-                                <img src="{{ asset('images/itprv.jpg') }}" alt="Keep calm this isn't the end of the world, the preview is just missing.">
-                            </div>
-                            <div class="prev-slide">
-                                <img src="{{ asset('images/itprv.jpg') }}" alt="Keep calm this isn't the end of the world, the preview is just missing.">
-                            </div>
-                            <div class="prev-slide">
-                                <img src="{{ asset('images/itprv.jpg') }}" alt="Keep calm this isn't the end of the world, the preview is just missing.">
-                            </div>
-                            <div class="prev-slide">
-                                <img src="{{ asset('images/itprv.jpg') }}" alt="Keep calm this isn't the end of the world, the preview is just missing.">
-                            </div>
+                            @php
+                                $images = explode(',', $product->images);
+                            @endphp
+                            @foreach ($images as $image)
+                                <div class="prev-slide">
+                                 <img src="{{ $image }}" alt="Keep calm this isn't the end of the world, the preview is just missing.">
+                                </div>
+                            @endforeach
+                            
                         </div>
                         <!-- end /.item--preview-slider -->
 
@@ -79,35 +61,20 @@
                             <div class="prev-thumb">
                                 <div class="thumb-slider">
                                     <div class="item-thumb">
-                                        <img src="{{ asset('images/thumb1.jpg') }}" alt="This is the thumbnail of the item">
+                                        <img src="{{ $product->image }}" alt="This is the thumbnail of the item">
                                     </div>
+                                    @foreach ($images as $image)
                                     <div class="item-thumb">
-                                        <img src="{{ asset('images/thumb2.jpg') }}" alt="This is the thumbnail of the item">
+                                        <img src="{{ $image }}" alt="This is the thumbnail of the item">
                                     </div>
-                                    <div class="item-thumb">
-                                        <img src="{{ asset('images/thumb3.jpg') }}" alt="This is the thumbnail of the item">
+                                     @endforeach  
+                                      <div class="item-thumb">
+                                        <img src="{{ $image }}" alt="This is the thumbnail of the item">
                                     </div>
-                                    <div class="item-thumb">
-                                        <img src="{{ asset('images/thumb4.jpg') }}" alt="This is the thumbnail of the item">
-                                    </div>
-                                    <div class="item-thumb">
-                                        <img src="{{ asset('images/thumb5.jpg') }}" alt="This is the thumbnail of the item">
-                                    </div>
-                                    <div class="item-thumb">
-                                        <img src="{{ asset('images/thumb1.jpg') }}" alt="This is the thumbnail of the item">
-                                    </div>
-                                    <div class="item-thumb">
-                                        <img src="{{ asset('images/thumb2.jpg') }}" alt="This is the thumbnail of the item">
-                                    </div>
-                                    <div class="item-thumb">
-                                        <img src="{{ asset('images/thumb3.jpg') }}" alt="This is the thumbnail of the item">
-                                    </div>
-                                    <div class="item-thumb">
-                                        <img src="{{ asset('images/thumb4.jpg') }}" alt="This is the thumbnail of the item">
-                                    </div>
-                                    <div class="item-thumb">
-                                        <img src="{{ asset('images/thumb5.jpg') }}" alt="This is the thumbnail of the item">
-                                    </div>
+                                     <div class="item-thumb">
+                                        <img src="{{ $image }}" alt="This is the thumbnail of the item">
+                                    </div>                               
+                                                                        
                                 </div>
                                 <!-- end /.thumb-slider -->
 
@@ -387,37 +354,23 @@
                         <div class="sidebar-card card-pricing">
                             <div class="price">
                                 <h1>
-                                    <sup>$</sup>20 -
-                                    <sup>$</sup>60</h1>
+                                    <sup>$</sup>{{ $licenses->first()->price }} -
+                                    <sup>$</sup>{{ $licenses->last()->price }}</h1>
                             </div>
                             <ul class="pricing-options">
-                                <li>
+                                @foreach ($licenses as $license)
+                                   <li>
                                     <div class="custom-radio">
-                                        <input type="radio" id="opt1" class="" name="filter_opt" checked>
-                                        <label for="opt1">
-                                            <span class="circle"></span>Single Site License –
-                                            <span class="pricing__opt">$20.00</span>
+                                    <input type="radio" id="opt{{$loop->iteration}}" class="" name="filter_opt" {{$loop->iteration==1? "checked": ""}}>
+                                        <label for="opt{{$loop->iteration}}">
+                                            <span class="circle"></span>{{ $license->type }} -
+                                            <span class="pricing__opt">${{ $license->price }}</span>
                                         </label>
                                     </div>
-                                </li>
-                                <li>
-                                    <div class="custom-radio">
-                                        <input type="radio" id="opt2" class="" name="filter_opt">
-                                        <label for="opt2">
-                                            <span class="circle"></span>2 Sites License –
-                                            <span class="pricing__opt">$40.00</span>
-                                        </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="custom-radio">
-                                        <input type="radio" id="opt3" class="" name="filter_opt">
-                                        <label for="opt3">
-                                            <span class="circle"></span>Multi Site License –
-                                            <span class="pricing__opt">$60.00</span>
-                                        </label>
-                                    </div>
-                                </li>
+                                </li> 
+                                @endforeach
+                                
+                                
                             </ul>
                             <!-- end /.pricing-options -->
 
@@ -457,7 +410,7 @@
                                         <li>
                                             <span class="fa fa-star"></span>
                                         </li> 
-                                        @elseif($i == floor($product->rating) && ($i > 0) )
+                                        @elseif($i == floor($product->rating) && ($product->rating > floor($product->rating)) )
                                         <li>
                                              <span class="fa fa-star-half-o"></span>
                                         </li> 
