@@ -129,7 +129,7 @@
                                                         v-model="selectedCategory"
                                                         :multiple="true"
                                                         :options="Category"
-                                                        
+                                                       
                                                         placeholder="Please select the Categories">
                                                       </multiselect>
                                                      <input type="hidden" :value="selectedCategory"  name="categories">
