@@ -316,15 +316,15 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group radio-group">
-                                                        <p class="label">High Resolution</p>
+                                                        <p class="label">Responsive</p>
                                                         <div class="custom-radio">
-                                                            <input type="radio" id="yes" class="" name="high_res">
+                                                            <input type="radio" id="yes" class="" name="responsive" value="1">
                                                             <label for="yes">
                                                                 <span class="circle"></span>Yes</label>
                                                         </div>
 
                                                         <div class="custom-radio">
-                                                            <input type="radio" id="no" class="" name="high_res">
+                                                            <input type="radio" id="no" class="" name="responsive" value="0">
                                                             <label for="no">
                                                                 <span class="circle"></span>no</label>
                                                         </div>
@@ -342,7 +342,7 @@
                                                         </div>
 
                                                         <div class="custom-radio">
-                                                            <input type="radio" id="rno" class="" name="no">
+                                                            <input type="radio" id="rno" class="" name="retina" value="no">
                                                             <label for="rno">
                                                                 <span class="circle"></span>no</label>
                                                         </div>

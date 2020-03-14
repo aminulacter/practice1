@@ -4,10 +4,10 @@ export default {
   props: [
     "categories",
     "tags",
-    "selectedTags",
-    "selectedFiles",
+    "selectedtags",
+    "selectedfiles",
     "selectedbrowser",
-    "selectedCategory",
+    "selectedcategory",
     "enabledUserLicense"
   ],
 
@@ -41,6 +41,9 @@ export default {
         ? (this.enabledUserLicense = false)
         : (this.enabledUserLicense = true);
     }
+  },
+  created() {
+    console.log("selectedfiles is " + this.selectedfiles);
   }
 };
 </script>

@@ -28,7 +28,8 @@ class CreateProductsTable extends Migration
             $table->string('images')->nullable();
             $table->string('vedio')->nullable();
             $table->string('version')->default('1.0.0');
-            $table->string('layout')->nullable()->default('responsive');
+            $table->string('dimension')->default('1960x1200');
+            $table->boolean('responsive')->default(true);
             $table->boolean('retina_ready')->default(true);
             $table->text('files_included')->nullable();
             $table->text('browser')->nullable();

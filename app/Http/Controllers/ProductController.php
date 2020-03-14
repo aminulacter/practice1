@@ -66,23 +66,33 @@ class ProductController extends Controller
         $product->image = $request->image;
         $product->images = $request->images;
         $product->files_included = $request->files_included;
+        $product->responsive = $request->responsive == "1"? true: false;
         $product->browser = $request->browsers;
         $product->version = $request->version;
+        $product->dimension = $request->dimension;
         $product->retina_ready = $request->retina === 'yes' ? true : false;
         $product->save();
 
 
         foreach (explode(',', $request->categories) as $category) {
-            $product->categories()->sync(Category::where('name', $category)->first()->id);
+            $product->categories()->attach(Category::where('name', $category)->first()->id);
         }
         foreach (explode(',', $request->tags) as $tag) {
-            $product->tags()->sync(Tag::where('name', $tag)->first()->id);
+            $product->tags()->attach(Tag::where('name', $tag)->first()->id);
         }
 
-        $licensetype = ["regularlicense", "extendlicense", "SingleSiteLicense", "2SiteLicense", "MultipleLicense"];
-        foreach ($licensetype as $license) {
+        $licensetype = [
+        "regularlicense" => "Regular License",
+         "extendlicense" => "Extended License",
+         "SingleSiteLicense" => "Single Site License",
+         "2SiteLicense" => "2 Site License",
+         "MultipleLicense" => "Multiple License"];
+        
+        // dd($request->SingleSiteLicense);
+        foreach ($licensetype as $license => $value) {
             if ($request->has($license) && $request->$license) {
-                $newLicense = new LicenseType(['type' => $license, 'price' => $request->$license]);
+                $newLicense = new LicenseType(['type' => $value, 'price' => $request->$license]);
+                
                 $product->licences_types()->save($newLicense);
             }
         }
@@ -124,7 +134,10 @@ class ProductController extends Controller
         $tags = Tag::all();
         $selectedTags = $product->tags->pluck('name');
         $selectedCategory = $product->categories->pluck('name');
-        return view('product.edit', compact('product', 'categories', 'tags', 'selectedTags', 'selectedCategory'));
+        $files_included = explode(',', $product->files_included);
+        $browser = explode(',', $product->browser);
+        // dd($files_included);
+        return view('product.edit', compact('product', 'categories', 'tags', 'selectedTags', 'selectedCategory', 'files_included', 'browser'));
     }
 
     /**

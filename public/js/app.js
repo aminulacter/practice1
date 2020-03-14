@@ -1912,7 +1912,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_0__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["categories", "tags", "selectedTags", "selectedFiles", "selectedbrowser", "selectedCategory", "enabledUserLicense"],
+  props: ["categories", "tags", "selectedtags", "selectedfiles", "selectedbrowser", "selectedcategory", "enabledUserLicense"],
   components: {
     Multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_0___default.a
   },
@@ -1945,6 +1945,9 @@ __webpack_require__.r(__webpack_exports__);
 
       this.rlicense || this.elicense ? this.enabledUserLicense = false : this.enabledUserLicense = true;
     }
+  },
+  created: function created() {
+    console.log("selectedfiles is " + this.selectedfiles);
   }
 });
 
@@ -50396,8 +50399,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/aminul/laravelpro/practice1/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/aminul/laravelpro/practice1/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Administrator\laravelprojects\Marketplace\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Administrator\laravelprojects\Marketplace\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

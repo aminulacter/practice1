@@ -100,10 +100,10 @@
                     <div class="col-lg-8 col-md-7">
                         <create-edit :categories="{{$categories}}" 
                         :tags="{{ $tags }}" 
-                        :selectedTags="{{ $selectedTags }}" 
-                        :selectedFiles="{{ $product->files_included }}" 
-                        :selectedbrowser="{{ $product->browser }}" 
-                    :selectedCategory="{{ $selectedCategory}}" 
+                    :selectedcategory = "{{ $selectedCategory}}"
+                    :selectedtags ="{{ $selectedTags }}"  
+                    :selectedfiles ="{{ json_encode($files_included)  }}"
+                    :selectedbrowser = "{{ json_encode($browser)  }}"
                         inline-template>
                             
                                 <form action="{{ route('products.store')}}" method="POST">
@@ -132,13 +132,13 @@
                                                 <label for="category">Select Category</label>
                                                
                                                     <multiselect
-                                                        v-model="selectedCategory"
+                                                        v-model="selectedcategory"
                                                         :multiple="true"
                                                         :options="Category"
                                                        
                                                         placeholder="Please select the Categories">
                                                       </multiselect>
-                                                     <input type="hidden" :value="selectedCategory"  name="categories">
+                                                     <input type="hidden" :value="selectedcategory"  name="categories">
                                                 
                                             </div>
                                         </div>
@@ -170,7 +170,7 @@
                                                                 <i class="fa fa-picture-o"></i> Choose
                                                                 </a>
                                                             </span>
-                                                            <input id="image1" class="form-control" type="text" name="image" >
+                                                        <input id="image1" class="form-control" type="text" name="image" value="{{ $product->image}}">
                                                             </div>
                                                             <img id="holder" style="margin-top:15px;max-height:100px;">
 
@@ -197,7 +197,7 @@
                                                                 <i class="fa fa-picture-o"></i> Choose
                                                                 </a>
                                                             </span>
-                                                            <input id="image2" class="form-control" type="text" name="images">
+                                                        <input id="image2" class="form-control" type="text" name="images" value="{{ $product->images }}">
                                                             </div>
                                                             <img id="holder" style="margin-top:15px;max-height:100px;">
 
@@ -247,12 +247,12 @@
                                                     <div class="form-group">
                                                         <label for="selected">Files Included</label>
                                                        <multiselect
-                                                        v-model="selectedFiles"
+                                                        v-model="selectedfiles"
                                                         :multiple="true"
                                                         :options="files"
                                                         placeholder="Please select the Files Included">
                                                       </multiselect>
-                                                      <input type="hidden" :value="selectedFiles" name="files_included">
+                                                      <input type="hidden" :value="selectedfiles" name="files_included">
                                                     </div>
                                                     <!-- end /.form-group -->
                                                 </div>
@@ -279,7 +279,7 @@
                                                     <div class="form-group">
                                                         <label for="columns">Tags</label>
                                                        <multiselect
-                                                        v-model="selectedTags"
+                                                        v-model="selectedtags"
                                                         :multiple="true"
                                                         trackBy="name"
                                                         :options="optionTags"
@@ -287,7 +287,7 @@
                                                         name="tags"
                                                         placeholder="Please select the Tags">
                                                       </multiselect>
-                                                       <input type="hidden" :value="selectedTags"  name="tags">
+                                                       <input type="hidden" :value="selectedtags"  name="tags">
                                                      
                                                     </div>
                                                 </div>
@@ -309,11 +309,11 @@
                                                 <div class="select-wrap select-wrap2">
                                                     <select name="version" id="soft" class="text_field">
                                                         <option value="">Choose version</option>
-                                                        <option value="4">WordPress 4</option>
-                                                        <option value="4.1">WordPress 4.1.*</option>
-                                                        <option value="4.2">WordPress 4.2.*</option>
-                                                        <option value="4.3">WordPress 4.3.*</option>
-                                                        <option value="4.4">WordPress 4.4.*</option>
+                                                        <option value="4" {{ $product->version == 4? 'selected': ''}}>WordPress 4</option>
+                                                        <option value="4.1" {{ $product->version == 4.1? 'selected': ''}}>WordPress 4.1.*</option>
+                                                        <option value="4.2" {{ $product->version == 4.2? 'selected': ''}}>WordPress 4.2.*</option>
+                                                        <option value="4.3" {{ $product->version == 4.3? 'selected': ''}}>WordPress 4.3.*</option>
+                                                        <option value="4.4" {{ $product->version == 4.4? 'selected': ''}}>WordPress 4.4.*</option>
                                                     </select>
                                                     <span class="lnr lnr-chevron-down"></span>
                                                 </div>
@@ -322,15 +322,16 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group radio-group">
-                                                        <p class="label">High Resolution</p>
+                                                        <p class="label">Responsive</p>
                                                         <div class="custom-radio">
-                                                            <input type="radio" id="yes" class="" name="high_res">
+                                                            <input type="radio" id="yes" class="" name="responsive" value="1"  {{ $product->responsive=="1" ? "checked" : '' }}
+                                                            >
                                                             <label for="yes">
                                                                 <span class="circle"></span>Yes</label>
                                                         </div>
 
                                                         <div class="custom-radio">
-                                                            <input type="radio" id="no" class="" name="high_res">
+                                                            <input type="radio" id="no" class="" name="responsive" value="0"  {{ $product->responsive=="0" ? "checked" : '' }}>
                                                             <label for="no">
                                                                 <span class="circle"></span>no</label>
                                                         </div>
@@ -342,13 +343,13 @@
                                                     <div class="form-group radio-group">
                                                         <p class="label">Retina Ready</p>
                                                         <div class="custom-radio">
-                                                            <input type="radio" id="ryes" class="" name="retina" value="yes">
+                                                            <input type="radio" id="ryes" class="" name="retina" value="1"  {{ $product->retina_ready=="1" ? "checked" : '' }}>
                                                             <label for="ryes">
                                                                 <span class="circle"></span>Yes</label>
                                                         </div>
 
                                                         <div class="custom-radio">
-                                                            <input type="radio" id="rno" class="" name="no">
+                                                            <input type="radio" id="rno" class="" name="retina" value="0"  {{ $product->retina_ready=="0" ? "checked" : '' }}>
                                                             <label for="rno">
                                                                 <span class="circle"></span>no</label>
                                                         </div>
