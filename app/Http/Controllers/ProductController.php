@@ -66,7 +66,7 @@ class ProductController extends Controller
         $product->image = $request->image;
         $product->images = $request->images;
         $product->files_included = $request->files_included;
-        $product->browsers = $request->browsers;
+        $product->browser = $request->browsers;
         $product->version = $request->version;
         $product->retina_ready = $request->retina === 'yes' ? true : false;
         $product->save();
@@ -120,7 +120,11 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+        $categories = Category::all();
+        $tags = Tag::all();
+        $selectedTags = $product->tags->pluck('name');
+        $selectedCategory = $product->categories->pluck('name');
+        return view('product.edit', compact('product', 'categories', 'tags', 'selectedTags', 'selectedCategory'));
     }
 
     /**
