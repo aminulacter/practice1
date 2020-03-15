@@ -46,6 +46,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        // dd(licenseType('SingleSiteLicense'));
         $request->validate([
             "name" => 'required',
             "description" => 'required',
@@ -81,18 +82,33 @@ class ProductController extends Controller
             $product->tags()->attach(Tag::where('name', $tag)->first()->id);
         }
 
-        $licensetype = [
-        "regularlicense" => "Regular License",
-         "extendlicense" => "Extended License",
-         "SingleSiteLicense" => "Single Site License",
-         "2SiteLicense" => "2 Site License",
-         "MultipleLicense" => "Multiple License"];
+        // $licensetype = [
+        // "regularlicense" => "Regular License",
+        //  "extendlicense" => "Extended License",
+        //  "SingleSiteLicense" => "Single Site License",
+        //  "2SiteLicense" => "2 Site License",
+        //  "MultipleLicense" => "Multiple License"];
         
         // dd($request->SingleSiteLicense);
-        foreach ($licensetype as $license => $value) {
-            if ($request->has($license) && $request->$license) {
-                $newLicense = new LicenseType(['type' => $value, 'price' => $request->$license]);
+        $licensetype = [
+        "regularlicense",
+         "extendlicense",
+         "SingleSiteLicense",
+         "2SiteLicense",
+         "MultipleLicense",
+          ];
+
+        // foreach ($licensetype as $license => $value) {
+        //     if ($request->has($license) && $request->$license) {
+        //         $newLicense = new LicenseType(['type' => $value, 'price' => $request->$license]);
                 
+        //         $product->licences_types()->save($newLicense);
+        //     }
+        // }
+        foreach ($licensetype as $license) {
+            if ($request->has($license) && $request->$license) {
+                $newLicense = new LicenseType(['type' => $license, 'price' => $request->$license]);
+                        
                 $product->licences_types()->save($newLicense);
             }
         }
@@ -106,8 +122,6 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        // $product = Product::with(['user', 'users', 'categories'])->find($id);
-        //dd($product->ratingcounts);
         $comments = $product->comments()->whereNull('comment_id')
             ->with('user')
             ->with('commentReplies')
@@ -149,7 +163,79 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $request->validate([
+            "name" => 'required',
+            "description" => 'required',
+            "categories" => 'required',
+            "images" => 'required',
+            "files_included" => 'required',
+            "browsers" => 'required',
+            "tags" => 'required',
+        ]);
+      
+        $slug = Str::slug($request->name, '-');
+
+        $product->name = $request->name;
+        $product->slug = $slug;
+        $product->user_id = auth()->user()->id;
+        $product->details  = $request->description;
+        $product->description = $request->description;
+        $product->image = $request->image;
+        $product->images = $request->images;
+        $product->files_included = $request->files_included;
+        $product->responsive = $request->responsive == "1"? true: false;
+        $product->browser = $request->browsers;
+        $product->version = $request->version;
+        $product->dimension = $request->dimension;
+        $product->retina_ready = $request->retina === 'yes' ? true : false;
+        $product->save();
+
+        /*updating Category Information */
+        $syncCategory=[];
+        foreach (explode(',', $request->categories) as $category) {
+            // $product->categories()->attach(Category::where('name', $category)->first()->id);
+            array_push($syncCategory, Category::where('name', $category)->first()->id);
+        }
+        $product->categories()->sync($syncCategory);
+
+        /*updating Tag Information */
+        $syncTags=[];
+        foreach (explode(',', $request->tags) as $tag) {
+            //$product->tags()->attach(Tag::where('name', $tag)->first()->id);
+            array_push($syncTags, Category::where('name', $tag)->first()->id);
+        }
+        $product->tags()->sync($syncTags);
+
+        /*updating License Information */
+        $licensetype = [
+        "regularlicense",
+         "extendlicense",
+         "SingleSiteLicense",
+         "2SiteLicense",
+         "MultipleLicense",
+          ];
+
+        /* To update license first we have to take all previous license save to an array then to compare it to
+        new array of license type then delete the values which is not present  in new array*/
+        $licenseArray = $product->licences_types()->pluck('id');
+        $newLicenseArray=[];
+        foreach ($licensetype as $license) {
+            if ($request->has($license) && $request->$license) {
+                $editLicense = LicenseType::where('type', $license)->first();
+                if ($editLicense) {
+                    $editLicense->price = $request->$license;
+                    $editLicense->save();
+                } else {
+                    $editLicense = new LicenseType(['type' => $license, 'price' => $request->$license]);
+                    $product->licences_types()->save($newLicense);
+                }
+                array_push($newLicenseArray, $editLicense->id);
+            }
+        }
+        $licenseToDelete = array_diff($licenseArray, $newLicenseArray);
+        foreach ($licenseToDelete as $license) {
+            LicenseType::find($license)->delete();
+        }
     }
 
     /**

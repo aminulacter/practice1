@@ -363,7 +363,7 @@
                                     <div class="custom-radio">
                                     <input type="radio" id="opt{{$loop->iteration}}" class="" name="filter_opt" {{$loop->iteration==1? "checked": ""}}>
                                         <label for="opt{{$loop->iteration}}">
-                                            <span class="circle"></span>{{ $license->type }} -
+                                            <span class="circle"></span>{{ licenseType($license->type) }} -
                                             <span class="pricing__opt">${{ $license->price }}</span>
                                         </label>
                                     </div>
