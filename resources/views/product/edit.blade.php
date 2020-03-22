@@ -95,7 +95,33 @@
                     <!-- end /.col-md-12 -->
                 </div>
                 <!-- end /.row -->
-                
+                @php
+                $types=[ 
+                      "regularlicense" => null,
+                          "extendlicense" => null,
+                          "SingleSiteLicense" =>null,
+                          "2SiteLicense" => null,
+                          "MultipleLicense" =>null
+                  ];
+
+                  $licences = $product->licences_types;
+
+                 
+                  foreach($licences as $licence)
+                  {
+
+                  if(array_key_exists($licence->type, $types))
+                      {
+                          $types[$licence->type] = $licence->price;
+                      }
+                  
+                  }
+                  $enabledUserLicense=true;
+                  if ($types["regularlicense"] || $types["extendlicense"] ) {
+                      $enabledUserLicense = false;
+                  }
+                  //dd($enabledUserLicense);
+              @endphp
                 <div class="row">
                     <div class="col-lg-8 col-md-7">
                         <create-edit :categories="{{$categories}}" 
@@ -104,10 +130,12 @@
                     :selectedtags ="{{ $selectedTags }}"  
                     :selectedfiles ="{{ json_encode($files_included)  }}"
                     :selectedbrowser = "{{ json_encode($browser)  }}"
+                    :enabledUserLicense = "{{ $enabledUserLicense? 'true' : 'false' }}"
                         inline-template>
                             
-                                <form action="{{ route('products.store')}}" method="POST">
+                                <form action="{{ route('products.update', $product->id)}}" method="POST">
                                 @csrf
+                                @method('patch')
                                     <div class="upload_modules">
                                         <div class="modules__title">
                                             <h3>Item Name & Description</h3>
@@ -296,7 +324,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label for="dimension">Item Dimensions</label>
-                                                        <input type="text" id="dimension" class="text_field" placeholder="Ex: 1920x6000." name="dimension">
+                                                    <input type="text" id="dimension" class="text_field" placeholder="Ex: 1920x6000." name="dimension" value="{{ $product->dimension}}">
                                                     </div>
                                                 </div>
                                                 <!-- end /.col-md-6 -->
@@ -370,7 +398,7 @@
                                             <h3>Others Information</h3>
                                         </div>
                                         <!-- end /.module_title -->
-
+                                       
                                         <div class="modules__content">
                                             <div class="row">
                                                 <div class="col-md-6">
@@ -378,7 +406,9 @@
                                                         <label for="rlicense">Regular License</label>
                                                         <div class="input-group">
                                                             <span class="input-group-addon">$</span>
-                                                            <input type="text" id="rlicense" class="text_field" placeholder="00.00" name="regularlicense" v-model="rlicense" @blur="checkanddisableUserLicense($event)">
+                                                            <input type="number" id="rlicense" class="text_field" placeholder="00.00" 
+                                                            name="regularlicense" value='{{ $types["regularlicense"]}}' 
+                                                            @blur="checkanddisableUserLicense($event)" ref="reglicence" @keypress="onlyNumber">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -389,7 +419,9 @@
                                                         <label for="exlicense">Extended License</label>
                                                         <div class="input-group">
                                                             <span class="input-group-addon">$</span>
-                                                            <input type="text" id="exlicense" class="text_field" placeholder="00.00" name="extendlicense" v-model="elicense" @blur="checkanddisableUserLicense($event)">
+                                                            <input type="number" id="exlicense" class="text_field" placeholder="00.00" 
+                                                            name="extendlicense" value='{{ $types["extendlicense"] }}' 
+                                                            @blur="checkanddisableUserLicense($event)" ref="extlicence" @keypress="onlyNumber">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -398,14 +430,15 @@
                                             </div>
                                             <!-- end /.row -->
                                             
-                                            <div class="row" v-if="enabledUserLicense">
+                                            <div class="row" v-if="UserLicense">
                                                 <div class="or" class="col-md-12"></div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="single_use">Single User License</label>
                                                         <div class="input-group">
                                                             <span class="input-group-addon">$</span>
-                                                            <input type="text" id="single_use" class="text_field" placeholder="00.00" name="SingleSiteLicense">
+                                                            <input type="text" id="single_use" class="text_field" placeholder="00.00" 
+                                                            name="SingleSiteLicense" value='{{ $types["SingleSiteLicense"] }}' @keypress="onlyNumber">
 
                                                         </div>
                                                     </div>
@@ -416,7 +449,8 @@
                                                         <label for="double_use">2 User License</label>
                                                         <div class="input-group">
                                                             <span class="input-group-addon">$</span>
-                                                            <input type="text" id="double_use" class="text_field" placeholder="00.00" name="2SiteLicense">
+                                                            <input type="text" id="double_use" class="text_field" placeholder="00.00" 
+                                                            name="2SiteLicense" value='{{ $types["2SiteLicense"] }}' @keypress="onlyNumber">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -426,7 +460,8 @@
                                                         <label for="multi_user">Multi User License</label>
                                                         <div class="input-group">
                                                             <span class="input-group-addon">$</span>
-                                                            <input type="text" id="multi_user" class="text_field" placeholder="00.00" name="MultipleLicense">
+                                                            <input type="text" id="multi_user" class="text_field" placeholder="00.00" 
+                                                            name="MultipleLicense" value='{{ $types["MultipleLicense"] }}' @keypress="onlyNumber">
                                                         </div>
                                                     </div>
                                                 </div>

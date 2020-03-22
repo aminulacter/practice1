@@ -46,6 +46,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+       // dd($request->all());
         // dd(licenseType('SingleSiteLicense'));
         $request->validate([
             "name" => 'required',
@@ -112,6 +113,7 @@ class ProductController extends Controller
                 $product->licences_types()->save($newLicense);
             }
         }
+        return redirect()->route('products.show', $product);
     }
 
     /**
@@ -144,6 +146,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+       
         $categories = Category::all();
         $tags = Tag::all();
         $selectedTags = $product->tags->pluck('name');
@@ -163,6 +166,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+       //dd($request->retina);
         $request->validate([
             "name" => 'required',
             "description" => 'required',
@@ -187,7 +191,7 @@ class ProductController extends Controller
         $product->browser = $request->browsers;
         $product->version = $request->version;
         $product->dimension = $request->dimension;
-        $product->retina_ready = $request->retina === 'yes' ? true : false;
+        $product->retina_ready = $request->retina == '1' ? true : false;
         $product->save();
 
         /*updating Category Information */
@@ -202,7 +206,8 @@ class ProductController extends Controller
         $syncTags=[];
         foreach (explode(',', $request->tags) as $tag) {
             //$product->tags()->attach(Tag::where('name', $tag)->first()->id);
-            array_push($syncTags, Category::where('name', $tag)->first()->id);
+            //dd($tag);
+            array_push($syncTags, Tag::where('name', $tag)->first()->id);
         }
         $product->tags()->sync($syncTags);
 
@@ -227,15 +232,18 @@ class ProductController extends Controller
                     $editLicense->save();
                 } else {
                     $editLicense = new LicenseType(['type' => $license, 'price' => $request->$license]);
-                    $product->licences_types()->save($newLicense);
+                    $product->licences_types()->save($editLicense);
                 }
                 array_push($newLicenseArray, $editLicense->id);
             }
         }
-        $licenseToDelete = array_diff($licenseArray, $newLicenseArray);
+        
+        $licenseToDelete = array_diff($licenseArray->toArray(), $newLicenseArray);
         foreach ($licenseToDelete as $license) {
             LicenseType::find($license)->delete();
         }
+        return redirect()->route('products.show', $product);
+        
     }
 
     /**

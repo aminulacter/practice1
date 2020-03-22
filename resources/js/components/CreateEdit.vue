@@ -20,7 +20,9 @@ export default {
       browser: ["IE8", "IE9", "Crome", "firefox", "safari"],
 
       rlicense: null,
-      elicense: null
+      elicense: null,
+      UserLicense: this.enabledUserLicense
+      //enabledUserLicense: true
     };
   },
 
@@ -34,12 +36,38 @@ export default {
   },
   methods: {
     checkanddisableUserLicense($event) {
-      if (event.target.value.length) {
-        this.enabledUserLicense = false;
-      } else event.target.value = null;
-      this.rlicense || this.elicense
-        ? (this.enabledUserLicense = false)
-        : (this.enabledUserLicense = true);
+      if (!event.target.value.trim().length) {
+        event.target.value = null;
+      }
+      this.hideOrShow();
+    },
+    hideOrShow() {
+      let cond1 =
+        this.$refs.reglicence.value.trim() != ""
+          ? parseInt(this.$refs.reglicence.value, 10)
+          : 0;
+      let cond2 =
+        this.$refs.extlicence.value.trim() != ""
+          ? parseInt(this.$refs.extlicence.value, 10)
+          : 0;
+
+      if (cond1 || cond2) {
+        //console.log(this.$refs.extlicence.value.trim());
+        //console.log(parseInt(this.$refs.extlicence.value, 10));
+        this.UserLicense = false;
+      } else {
+        this.$nextTick(() => (this.UserLicense = true));
+      }
+    },
+    onlyNumber($event) {
+      //console.log($event.keyCode); //keyCodes value
+      let keyCode = $event.keyCode ? $event.keyCode : $event.which;
+      if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) {
+        // 46 is dot
+        $event.preventDefault();
+      }
+
+      this.hideOrShow();
     }
   },
   created() {

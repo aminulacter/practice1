@@ -1922,7 +1922,9 @@ __webpack_require__.r(__webpack_exports__);
       files: ["php", "Html", "psd", "javaScript", "coffeScript", "Video"],
       browser: ["IE8", "IE9", "Crome", "firefox", "safari"],
       rlicense: null,
-      elicense: null
+      elicense: null,
+      UserLicense: this.enabledUserLicense //enabledUserLicense: true
+
     };
   },
   computed: {
@@ -1939,11 +1941,38 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     checkanddisableUserLicense: function checkanddisableUserLicense($event) {
-      if (event.target.value.length) {
-        this.enabledUserLicense = false;
-      } else event.target.value = null;
+      if (!event.target.value.trim().length) {
+        event.target.value = null;
+      }
 
-      this.rlicense || this.elicense ? this.enabledUserLicense = false : this.enabledUserLicense = true;
+      this.hideOrShow();
+    },
+    hideOrShow: function hideOrShow() {
+      var _this = this;
+
+      var cond1 = this.$refs.reglicence.value.trim() != "" ? parseInt(this.$refs.reglicence.value, 10) : 0;
+      var cond2 = this.$refs.extlicence.value.trim() != "" ? parseInt(this.$refs.extlicence.value, 10) : 0;
+
+      if (cond1 || cond2) {
+        //console.log(this.$refs.extlicence.value.trim());
+        //console.log(parseInt(this.$refs.extlicence.value, 10));
+        this.UserLicense = false;
+      } else {
+        this.$nextTick(function () {
+          return _this.UserLicense = true;
+        });
+      }
+    },
+    onlyNumber: function onlyNumber($event) {
+      //console.log($event.keyCode); //keyCodes value
+      var keyCode = $event.keyCode ? $event.keyCode : $event.which;
+
+      if ((keyCode < 48 || keyCode > 57) && keyCode !== 46) {
+        // 46 is dot
+        $event.preventDefault();
+      }
+
+      this.hideOrShow();
     }
   },
   created: function created() {
@@ -50399,8 +50428,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Administrator\laravelprojects\Marketplace\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Administrator\laravelprojects\Marketplace\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/aminul/laravelpro/marketplace/practice1/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/aminul/laravelpro/marketplace/practice1/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
