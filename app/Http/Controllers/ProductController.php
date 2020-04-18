@@ -23,7 +23,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::paginate(6);
+        return view('product.index', compact('products'));
     }
 
     /**
@@ -51,6 +52,7 @@ class ProductController extends Controller
         $request->validate([
             "name" => 'required',
             "description" => 'required',
+	    "details" => 'required',
             "categories" => 'required',
             "images" => 'required',
             "files_included" => 'required',
@@ -63,7 +65,7 @@ class ProductController extends Controller
         $product->name = $request->name;
         $product->slug = $slug;
         $product->user_id = auth()->user()->id;
-        $product->details  = $request->description;
+        $product->details  = $request->details;
         $product->description = $request->description;
         $product->image = $request->image;
         $product->images = $request->images;
@@ -170,6 +172,7 @@ class ProductController extends Controller
         $request->validate([
             "name" => 'required',
             "description" => 'required',
+	    "details" => 'required',	
             "categories" => 'required',
             "images" => 'required',
             "files_included" => 'required',
@@ -181,8 +184,8 @@ class ProductController extends Controller
 
         $product->name = $request->name;
         $product->slug = $slug;
-        $product->user_id = auth()->user()->id;
-        $product->details  = $request->description;
+       // $product->user_id = auth()->user()->id;
+        $product->details  = $request->details;
         $product->description = $request->description;
         $product->image = $request->image;
         $product->images = $request->images;
@@ -223,15 +226,19 @@ class ProductController extends Controller
         /* To update license first we have to take all previous license save to an array then to compare it to
         new array of license type then delete the values which is not present  in new array*/
         $licenseArray = $product->licences_types()->pluck('id');
+	//dd($licenseArray);
         $newLicenseArray=[];
         foreach ($licensetype as $license) {
+            
             if ($request->has($license) && $request->$license) {
-                $editLicense = LicenseType::where('type', $license)->first();
+                $editLicense = LicenseType::where('type', $license)->where('product_id', $product->id)->first();
                 if ($editLicense) {
+                   // dd($editLicense);
                     $editLicense->price = $request->$license;
                     $editLicense->save();
                 } else {
                     $editLicense = new LicenseType(['type' => $license, 'price' => $request->$license]);
+                    //dd($editLicense);
                     $product->licences_types()->save($editLicense);
                 }
                 array_push($newLicenseArray, $editLicense->id);
@@ -239,8 +246,9 @@ class ProductController extends Controller
         }
         
         $licenseToDelete = array_diff($licenseArray->toArray(), $newLicenseArray);
+	
         foreach ($licenseToDelete as $license) {
-            LicenseType::find($license)->delete();
+           LicenseType::find($license)->delete();
         }
         return redirect()->route('products.show', $product);
         

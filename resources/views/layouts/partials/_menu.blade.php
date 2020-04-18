@@ -106,44 +106,56 @@
                                     <li class="has_dropdown">
                                         <div class="icon_wrap">
                                             <span class="lnr lnr-cart"></span>
-                                            <span class="notification_count purch">2</span>
+                                        <span class="notification_count purch">{{Cart::count()}}</span>
                                         </div>
-
+                                        @if(Cart::count() > 0)
                                         <div class="dropdowns dropdown--cart">
+                                            
                                             <div class="cart_area">
+                                                @foreach (Cart::content() as $item)
                                                 <div class="cart_product">
                                                     <div class="product__info">
                                                         <div class="thumbn">
-                                                            <img src="images/capro1.jpg" alt="cart product thumbnail">
+                                                            <img src="{{ asset($item->model->image) }}" alt="cart product thumbnail">
                                                         </div>
 
                                                         <div class="info">
-                                                            <a class="title" href="single-product.html">Finance and Consulting Business Theme</a>
+                                                            <a class="title" href="{{ route('products.show', $item->model->id) }}">{{ $item->model->name }}</a>
                                                             <div class="cat">
                                                                 <a href="#">
-                                                                    <img src="images/catword.png" alt="">Wordpress</a>
+                                                                    {{ $item->options->has('licencetype') ? licenseType($item->options->licencetype) : ''}}</a>
                                                             </div>
                                                         </div>
                                                     </div>
-
-                                                    <div class="product__action">
-                                                        <a href="#">
-                                                            <span class="lnr lnr-trash"></span>
-                                                        </a>
-                                                        <p>$60</p>
+                                                    <div class="product__action1">
+                                                        @php
+                                                        $id ="top". $item->rowId;
+                                                        @endphp
+                                                        <a href="{{ route('cart.destroy', $item->rowId)}}" class="remove_from_cart" onclick="event.preventDefault();
+                                                            document.getElementById('{{ $id }}').submit();"> 
+                                                                <span class="lnr lnr-trash"></span>
+                                                            </a>
+                                                        <p>${{ $item->price }}</p>
+                                                        <form action="{{ route('cart.destroy', $item->rowId)}}" method="POST" id="{{$id}}">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                        </form>
                                                     </div>
-                                                </div>
-                                          
+                                                    </div>
+                                                
+                                                @endforeach
                                                 <div class="total">
                                                     <p>
-                                                        <span>Total :</span>$80</p>
+                                                        <span>Total :</span>${{Cart::subtotal()}}</p>
                                                 </div>
                                                 <div class="cart_action">
-                                                    <a class="go_cart" href="cart.html">View Cart</a>
-                                                    <a class="go_checkout" href="checkout.html">Checkout</a>
+                                                    <a class="go_cart" href="{{ route('cart.index') }}">View Cart</a>
+                                                    <a class="go_checkout" href="{{ route('checkout.index') }}">Checkout</a>
                                                 </div>
                                             </div>
+                                           
                                         </div>
+                                        @endif
                                     </li>
                                 </ul>
                             </div>
@@ -381,17 +393,17 @@
                                         </div>
                                     </li>
                                     <li class="has_dropdown">
-                                        <a href="all-products-list.html">all product</a>
+                                        <a href="{{ route('products.index') }}">all product</a>
                                         <div class="dropdowns dropdown--menu">
                                             <ul>
                                                 <li>
-                                                    <a href="all-products.html">Recent Items</a>
+                                                    <a href="{{ route('products.index') }}">Recent Items</a>
                                                 </li>
                                                 <li>
-                                                    <a href="all-products.html">Popular Items</a>
+                                                    <a href="{{ route('products.index') }}">Popular Items</a>
                                                 </li>
                                                 <li>
-                                                    <a href="index3.html">Free Templates</a>
+                                                    <a href="{{ route('products.index') }}">Free Templates</a>
                                                 </li>
                                                 <li>
                                                     <a href="#">Follow Feed</a>

@@ -1912,7 +1912,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_0__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["categories", "tags", "selectedtags", "selectedfiles", "selectedbrowser", "selectedcategory", "enabledUserLicense"],
+  props: ["categories", "tags", "selectedtags", "selectedfiles", "selectedbrowser", "selectedcategory", "enables2m"],
   components: {
     Multiselect: vue_multiselect__WEBPACK_IMPORTED_MODULE_0___default.a
   },
@@ -1923,7 +1923,7 @@ __webpack_require__.r(__webpack_exports__);
       browser: ["IE8", "IE9", "Crome", "firefox", "safari"],
       rlicense: null,
       elicense: null,
-      UserLicense: this.enabledUserLicense //enabledUserLicense: true
+      UserLicense: this.enables2m ? true : false //enabledUserLicense: true
 
     };
   },
@@ -1976,7 +1976,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    console.log("selectedfiles is " + this.selectedfiles);
+    console.log("enabled user licenese is: " + this.enableuser);
   }
 });
 

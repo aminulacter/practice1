@@ -6488,7 +6488,18 @@ h6 {
     -webkit-border-radius: 50%;
     border-radius: 50%;
 }
-
+.product__action1 {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    width: 40px;
+}
+.v_middle1 {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: -6px;
+    float: none;
+}
 .dropdowns.dropdown--cart .cart_area .cart_product .product__action p {
     background: rgba(6, 116, 236, 0.1);
     color: #0674ec;
@@ -8131,7 +8142,7 @@ ul.nav-tabs li {
     position: relative;
     border-bottom: 1px solid #ececec;
     display: inline-block;
-    margin-right: -1px;
+    margin-right: -5px;
 }
 
 ul.nav-tabs li + li {
@@ -9937,7 +9948,7 @@ span.counter {
     font-size: 16px;
     line-height: 46px;
     display: inline-block;
-    padding: 0 30px;
+    padding: 0 26px;
     color: #555555;
 }
 

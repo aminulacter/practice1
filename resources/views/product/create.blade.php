@@ -117,10 +117,13 @@
                                                 </label>
                                                 <input type="text" id="product_name" name="name" class="text_field" placeholder="Enter your product name here..." value="{{ old('name') }}">
                                             </div>
-
+                                            <div class="form-group ">
+                                                <p class="label">Product Short Description</p>
+                                            <textarea class="form-control" id="description" name="description">{!! old('description') !!}</textarea>
+                                            </div>
                                             <div class="form-group no-margin">
-                                                <p class="label">Product Description</p>
-                                            <textarea class="form-control" id="summary-ckeditor" name="description">{!! old('description') !!}</textarea>
+                                                <p class="label">Product Details</p>
+                                            <textarea class="form-control" id="summary-ckeditor" name="details">{!! old('details') !!}</textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label for="category">Select Category</label>

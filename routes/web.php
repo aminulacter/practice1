@@ -1,5 +1,6 @@
 <?php
-
+use Gloudemans\Shoppingcart\Facades\Cart;
+use Monarobase\CountryList\CountryListFacade;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,3 +27,15 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('products', 'ProductController');
 
 Route::get('/comments', 'CommentController@index');
+
+
+Route::get('/cart', 'CartController@index')->name('cart.index');
+Route::post('/cart', 'CartController@store')->name('cart.store');
+Route::delete('/cart/{product}', 'CartController@destroy')->name('cart.destroy');
+
+Route::get('/checkout', 'CheckoutController@index')->name('checkout.index');
+Route::post('/checkout', 'CheckoutController@store')->name('checkout.store');
+
+Route::get('empty', function(){
+    Cart::destroy();
+}); 

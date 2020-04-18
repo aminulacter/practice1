@@ -108,7 +108,7 @@ class ProductSeeder extends Seeder
             }
         }
         foreach ($products as $product) {
-            $license_type1=["Single Site License", "2 Site License", "MultipleSiteLicense"];
+            $license_type1=["SingleSiteLicense", "2SiteLicense", "MultipleLicense"];
             $price = [10, 20, 30];
             for ($i=0; $i <3; $i++) {
                 $license_type = new App\LicenseType(['type' => $license_type1[$i], 'price' => $price[$i]]);

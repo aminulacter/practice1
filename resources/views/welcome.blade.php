@@ -1,6 +1,9 @@
 @extends('layouts.layout')
 
-
+@section('extracss')
+ <link rel="stylesheet" href="{{ asset('css/owl.carousel.css') }}">
+    
+@endsection
 @section('breadcrumb')
 @include('layouts.partials._hero_Index')
 @endsection

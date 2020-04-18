@@ -128,7 +128,7 @@
                             <div class="fade show tab-pane product-tab active" id="product-details">
                                
                                 <div class="tab-content-wrapper">
-                                    {!! $product->description !!}
+                                    {!! $product->details !!}
                                 </div>
                             </div>
                             <!-- end /.tab-content -->
@@ -357,11 +357,15 @@
                                     <sup>$</sup>{{ $licenses->first()->price }} -
                                     <sup>$</sup>{{ $licenses->last()->price }}</h1>
                             </div>
+                            <form action="{{ route('cart.store') }}" method="POST">
+                                @csrf
+                            <input type="hidden" name="id" value="{{ $product->id }}">
+                            <input type="hidden" name="name" value="{{ $product->name }}">
                             <ul class="pricing-options">
                                 @foreach ($licenses as $license)
                                    <li>
                                     <div class="custom-radio">
-                                    <input type="radio" id="opt{{$loop->iteration}}" class="" name="filter_opt" {{$loop->iteration==1? "checked": ""}}>
+                                    <input type="radio" id="opt{{$loop->iteration}}" class="" name="filter_opt" {{$loop->iteration==1? "checked": ""}} value="{{ $license->type }}_{{ $license->price }}">
                                         <label for="opt{{$loop->iteration}}">
                                             <span class="circle"></span>{{ licenseType($license->type) }} -
                                             <span class="pricing__opt">${{ $license->price }}</span>
@@ -376,9 +380,13 @@
 
                             <div class="purchase-button">
                                 <a href="#" class="btn btn--lg btn--round">Purchase Now</a>
-                                <a href="#" class="btn btn--lg btn--round cart-btn">
-                                    <span class="lnr lnr-cart"></span> Add To Cart</a>
+                            
+                            
+                            <button type="submit" class="btn btn--lg btn--round cart-btn" style="margin-top: 10px">
+                                <span class="lnr lnr-cart"></span> Add To Cart</button>
+                                                           
                             </div>
+                          </form>
                             <!-- end /.purchase-button -->
                         </div>
                         <!-- end /.sidebar--card -->

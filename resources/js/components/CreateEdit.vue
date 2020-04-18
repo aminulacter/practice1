@@ -8,7 +8,7 @@ export default {
     "selectedfiles",
     "selectedbrowser",
     "selectedcategory",
-    "enabledUserLicense"
+    "enables2m"
   ],
 
   components: { Multiselect },
@@ -21,7 +21,7 @@ export default {
 
       rlicense: null,
       elicense: null,
-      UserLicense: this.enabledUserLicense
+      UserLicense: this.enables2m ? true : false
       //enabledUserLicense: true
     };
   },
@@ -71,7 +71,7 @@ export default {
     }
   },
   created() {
-    console.log("selectedfiles is " + this.selectedfiles);
+    console.log("enabled user licenese is: " + this.enableuser);
   }
 };
 </script>

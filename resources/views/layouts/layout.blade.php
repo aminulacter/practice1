@@ -38,6 +38,7 @@
     @yield('content')
     @include('layouts.partials._footer')
 </div>
+@include('sweetalert::alert')
     {{-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBe3OC_ofXkh25NyZalZGOVf_XBWLhunts"></script> --}}
     <!-- inject:js -->
     {{-- <script src="{{ asset('js/app.js') }}"></script> --}}

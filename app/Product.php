@@ -119,4 +119,9 @@ class Product extends Model
     {
         return $this->hasMany('App\Question');
     }
+
+    public function orders()
+    {
+        return $this->belongsToMany('App\Order')->withPivot('licence_type')->withTimestamps();
+    }
 }

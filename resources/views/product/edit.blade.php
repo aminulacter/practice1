@@ -13,11 +13,11 @@
                                 <a href="dashboard.html">Dashboard</a>
                             </li>
                             <li class="active">
-                                <a href="#">Upload Item</a>
+                                <a href="#">Edit Item</a>
                             </li>
                         </ul>
                     </div>
-                    <h1 class="page-title">Upload Item</h1>
+                    <h1 class="page-title">Edit Item</h1>
                 </div>
                 <!-- end /.col-md-12 -->
             </div>
@@ -87,7 +87,7 @@
                         <div class="dashboard_title_area">
                             <div class="pull-left">
                                 <div class="dashboard__title">
-                                    <h3>Upload Your Item</h3>
+                                    <h3>Edit Your Item</h3>
                                 </div>
                             </div>
                         </div>
@@ -97,7 +97,7 @@
                 <!-- end /.row -->
                 @php
                 $types=[ 
-                      "regularlicense" => null,
+                          "regularlicense" => null,
                           "extendlicense" => null,
                           "SingleSiteLicense" =>null,
                           "2SiteLicense" => null,
@@ -116,9 +116,9 @@
                       }
                   
                   }
-                  $enabledUserLicense=true;
-                  if ($types["regularlicense"] || $types["extendlicense"] ) {
-                      $enabledUserLicense = false;
+                  $enabledUserLicense=1;
+                  if ($types["regularlicense"] > 0 || $types["extendlicense"] > 0 ) {
+                      $enabledUserLicense = 0;
                   }
                   //dd($enabledUserLicense);
               @endphp
@@ -126,11 +126,12 @@
                     <div class="col-lg-8 col-md-7">
                         <create-edit :categories="{{$categories}}" 
                         :tags="{{ $tags }}" 
+                    
                     :selectedcategory = "{{ $selectedCategory}}"
                     :selectedtags ="{{ $selectedTags }}"  
                     :selectedfiles ="{{ json_encode($files_included)  }}"
                     :selectedbrowser = "{{ json_encode($browser)  }}"
-                    :enabledUserLicense = "{{ $enabledUserLicense? 'true' : 'false' }}"
+                    :enables2m = {{ $enabledUserLicense }}
                         inline-template>
                             
                                 <form action="{{ route('products.update', $product->id)}}" method="POST">
@@ -151,10 +152,14 @@
                                                 </label>
                                                 <input type="text" id="product_name" name="name" class="text_field" placeholder="Enter your product name here..." value="{{ $product->name }}">
                                             </div>
+                                            <div class="form-group ">
+                                                <p class="label">Product Short Description</p>
+                                            <textarea class="form-control" id="description" name="description">{{ $product->description }}</textarea>
+                                            </div>
 
                                             <div class="form-group no-margin">
-                                                <p class="label">Product Description</p>
-                                            <textarea class="form-control" id="summary-ckeditor" name="description">{!! $product->description !!}</textarea>
+                                                <p class="label">Product Details</p>
+                                            <textarea class="form-control" id="summary-ckeditor" name="details">{!! $product->details !!}</textarea>
                                             </div>
                                             <div class="form-group">
                                                 <label for="category">Select Category</label>
